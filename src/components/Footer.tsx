@@ -1,6 +1,5 @@
 import { MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Footer = () => {
@@ -29,23 +28,13 @@ const Footer = () => {
           {/* Company Info */}
           <div className="mb-8">
             <img 
-              src="/lovable-uploads/awqat-logo.png" 
+              src="/lovable-uploads/1ed71778-e792-40a8-8405-33112955d820.png" 
               alt="شركة أوقات للسياحة والسفر" 
               className="h-16 mx-auto mb-4 filter brightness-0 invert"
             />
             <div className="flex items-center justify-center mb-4 font-arabic">
               <MapPin className={`h-5 w-5 ${direction === 'rtl' ? 'mr-2' : 'ml-2'}`} />
               <span>{t('footer.address')}</span>
-            </div>
-            
-            {/* About Us Link */}
-            <div className="mb-4">
-              <Link 
-                to="/about" 
-                className="text-white hover:text-yellow-200 underline font-arabic text-lg transition-colors"
-              >
-                {t('footer.aboutUs')}
-              </Link>
             </div>
           </div>
         </div>

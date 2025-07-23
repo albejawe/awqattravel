@@ -29,6 +29,7 @@ interface TravelOffer {
   title: string;
   description: string;
   price: string;
+  ticketPrice: string;
   duration: string;
   location: string;
   images: string[];
@@ -38,19 +39,17 @@ interface TravelOffer {
   originalPrice?: string;
   discount?: string;
   hotel: string;
+  roomType: string;
   airline: string;
+  departureDate: string;
+  departureTime: string;
+  returnDate: string;
+  returnTime: string;
   priceDetails: {
-    single?: string;
-    double?: string;
-    triple?: string;
-    quad?: string;
-    penta?: string;
-  };
-  dynamicPrices?: {
-    [key: string]: {
-      value: string;
-      displayName: string;
-    };
+    doublePackage?: string;
+    triplePackage?: string;
+    quadPackage?: string;
+    child?: string;
   };
 }
 
@@ -105,93 +104,58 @@ const TravelOffers = () => {
                 }
               }
 
-              // جمع أسعار جميع الأنواع (مع دعم الأسماء المتغيرة)
+              // جمع الأسعار المختلفة
               const priceDetails: any = {};
-              const dynamicPrices: any = {};
               
-              // الأسعار الثابتة
-              if (row["السعر للفردي"]) priceDetails.single = row["السعر للفردي"];
-              if (row["السعر للمزدوج"]) priceDetails.double = row["السعر للمزدوج"];
-              if (row["السعر للثلاثي"]) priceDetails.triple = row["السعر للثلاثي"];
-              if (row["السعر للرباعي"]) priceDetails.quad = row["السعر للرباعي"];
-              if (row["السعر للخماسي"]) priceDetails.penta = row["السعر للخماسي"];
-
-              // البحث عن أعمدة الأسعار الديناميكية
-              Object.keys(row).forEach(columnName => {
-                if (columnName.includes("سعر") && 
-                    !["السعر للفردي", "السعر للمزدوج", "السعر للثلاثي", "السعر للرباعي", "السعر للخماسي"].includes(columnName) &&
-                    row[columnName] && row[columnName].trim()) {
-                  
-                  // تحديد التسمية بناءً على اسم العمود
-                  let displayName = columnName;
-                  
-                  console.log('Processing column:', columnName);
-                  console.log('Available columns:', Object.keys(row));
-                  console.log('التسمية 2 value:', row["التسمية 2"]);
-                  
-                  if (columnName === "سعر السياحة 1" && row["التسمية 1"]) {
-                    displayName = row["التسمية 1"];
-                  } else if (columnName === "سعر السياحة 2" && row["التسمية 2"]) {
-                    console.log('Setting displayName for سعر السياحة 2 to:', row["التسمية 2"]);
-                    displayName = row["التسمية 2"];
-                  } else if (columnName === "سعر السياحة 3" && row["التسمية 3"]) {
-                    displayName = row["التسمية 3"];
-                  } else if (columnName === "سعر السياحة 4" && row["التسمية 4"]) {
-                    displayName = row["التسمية 4"];
-                  } else if (columnName === "سعر السياحة 5" && row["التسمية 5"]) {
-                    displayName = row["التسمية 5"];
-                  }
-                  
-                  console.log('Final displayName for', columnName, ':', displayName);
-                  
-                  dynamicPrices[columnName] = {
-                    value: row[columnName],
-                    displayName: displayName
-                  };
-                }
-              });
+              if (row["الباكيج الثنائي"]) priceDetails.doublePackage = row["الباكيج الثنائي"];
+              if (row["الباكيج الثلاثي"]) priceDetails.triplePackage = row["الباكيج الثلاثي"];
+              if (row["الباكيج الرباعي"]) priceDetails.quadPackage = row["الباكيج الرباعي"];
+              if (row["الطفل"]) priceDetails.child = row["الطفل"];
 
               // تحديد السعر المعروض أولاً
               let displayPrice = "";
-              if (priceDetails.double) {
-                displayPrice = `${priceDetails.double} د.ك`;
-              } else if (priceDetails.single) {
-                displayPrice = `${priceDetails.single} د.ك`;
-              } else if (Object.keys(dynamicPrices).length > 0) {
-                // استخدام أول سعر ديناميكي إذا لم توجد أسعار ثابتة
-                const firstDynamicPrice = Object.values(dynamicPrices)[0] as any;
-                displayPrice = `${firstDynamicPrice.value} د.ك`;
+              if (row["السعر"]) {
+                displayPrice = `${row["السعر"]} د.ك`;
+              } else if (priceDetails.doublePackage) {
+                displayPrice = `${priceDetails.doublePackage} د.ك`;
               }
 
               return {
                 category: row["الوجهه"] || "عام",
-                title: row["اسم العرض"] || row["الوجهه"] || "",
+                title: row["أسم العرض"] || row["الوجهه"] || "",
                 description: row["عدد ايام البرنامج"] && row["عدد ايام البرنامج"] !== "" 
                   ? `رحلة ${row["عدد ايام البرنامج"]} أيام إلى ${row["الوجهه"]} مع ${row["الطيران"] || "طيران ممتاز"}`
                   : `رحلة إلى ${row["الوجهه"]} مع ${row["الطيران"] || "طيران ممتاز"}`,
                 price: displayPrice,
+                ticketPrice: row["سعر التذكرة"] || "",
                 duration: row["عدد ايام البرنامج"] && row["عدد ايام البرنامج"] !== "" ? row["عدد ايام البرنامج"] : "",
                 location: row["الوجهه"] || "",
-                hotel: row["القندق"] || "",
+                hotel: row["الفندق"] || "",
+                roomType: row["نوع الغرفة"] || "",
                 airline: row["الطيران"] || "",
+                departureDate: row["تاريخ الاقلاع"] || "",
+                departureTime: row["وقت الاقلاع"] || "",
+                returnDate: row["تاريخ العودة"] || "",
+                returnTime: row["وقت العودة"] || "",
                 images: images,
-                videoUrl: row["الفيديو"],
+                videoUrl: row["فيديو اليوتيوب"],
                 priceDetails: priceDetails,
-                dynamicPrices: dynamicPrices,
-                details: row["تفاصيل العرض"] || `رحلة رائعة إلى ${row["الوجهه"]} تشمل الإقامة في ${row["القندق"]} والطيران مع ${row["الطيران"]}.
+                details: row["التفاصيل"] || `رحلة رائعة إلى ${row["الوجهه"]} تشمل الإقامة في ${row["الفندق"]} والطيران مع ${row["الطيران"]}.
                 
 تفاصيل الرحلة:
-- تاريخ الذهاب: ${row["تاريخ الذهاب"]} في تمام ${row["وقت الذهاب"]}
+- تاريخ الذهاب: ${row["تاريخ الاقلاع"]} في تمام ${row["وقت الاقلاع"]}
 - تاريخ العودة: ${row["تاريخ العودة"]} في تمام ${row["وقت العودة"]}
 ${row["عدد ايام البرنامج"] && row["عدد ايام البرنامج"] !== "" ? `- مدة الرحلة: ${row["عدد ايام البرنامج"]} أيام` : ""}
+${row["الفندق"] ? `- الفندق: ${row["الفندق"]}` : ""}
+${row["نوع الغرفة"] ? `- نوع الغرفة: ${row["نوع الغرفة"]}` : ""}
 
 الأسعار:
-${priceDetails.single ? `- السعر للفرد: ${priceDetails.single} د.ك` : ""}
-${priceDetails.double ? `- السعر للمزدوج: ${priceDetails.double} د.ك` : ""}
-${priceDetails.triple ? `- السعر للثلاثي: ${priceDetails.triple} د.ك` : ""}
-${priceDetails.quad ? `- السعر للرباعي: ${priceDetails.quad} د.ك` : ""}
-${priceDetails.penta ? `- السعر للخماسي: ${priceDetails.penta} د.ك` : ""}
-${Object.keys(dynamicPrices).map(key => `- ${dynamicPrices[key].displayName}: ${dynamicPrices[key].value} د.ك`).join('\n')}`,
+${row["السعر"] ? `- السعر الأساسي: ${row["السعر"]} د.ك` : ""}
+${row["سعر التذكرة"] ? `- سعر التذكرة: ${row["سعر التذكرة"]} د.ك` : ""}
+${priceDetails.doublePackage ? `- الباكيج الثنائي: ${priceDetails.doublePackage} د.ك` : ""}
+${priceDetails.triplePackage ? `- الباكيج الثلاثي: ${priceDetails.triplePackage} د.ك` : ""}
+${priceDetails.quadPackage ? `- الباكيج الرباعي: ${priceDetails.quadPackage} د.ك` : ""}
+${priceDetails.child ? `- سعر الطفل: ${priceDetails.child} د.ك` : ""}`,
                 rating: parseFloat(row["Score"]) || 5
               };
             });
@@ -617,48 +581,63 @@ ${Object.keys(dynamicPrices).map(key => `- ${dynamicPrices[key].displayName}: ${
                     <div className="mb-4 bg-muted/50 rounded-lg p-3">
                       <h4 className="text-sm font-bold font-arabic text-primary mb-2">{t('offers.priceDetails')}</h4>
                       <div className="space-y-2">
-                        {offer.priceDetails.single && (
+                        {offer.ticketPrice && (
                           <div className="flex justify-between items-center bg-background rounded px-2 py-1">
-                            <span className="font-arabic text-sm font-medium">{t('offers.single')}</span>
-                            <span className="font-arabic font-bold text-primary">{offer.priceDetails.single} {t('offers.currency')}</span>
+                            <span className="font-arabic text-sm font-medium">سعر التذكرة</span>
+                            <span className="font-arabic font-bold text-primary">{offer.ticketPrice} {t('offers.currency')}</span>
                           </div>
                         )}
-                        {offer.priceDetails.double && (
+                        {offer.priceDetails.doublePackage && (
                           <div className="flex justify-between items-center bg-background rounded px-2 py-1">
-                            <span className="font-arabic text-sm font-medium">{t('offers.double')}</span>
-                            <span className="font-arabic font-bold text-primary">{offer.priceDetails.double} {t('offers.currency')}</span>
+                            <span className="font-arabic text-sm font-medium">الباكيج الثنائي</span>
+                            <span className="font-arabic font-bold text-primary">{offer.priceDetails.doublePackage} {t('offers.currency')}</span>
                           </div>
                         )}
-                        {offer.priceDetails.triple && (
+                        {offer.priceDetails.triplePackage && (
                           <div className="flex justify-between items-center bg-background rounded px-2 py-1">
-                            <span className="font-arabic text-sm font-medium">{t('offers.triple')}</span>
-                            <span className="font-arabic font-bold text-primary">{offer.priceDetails.triple} {t('offers.currency')}</span>
+                            <span className="font-arabic text-sm font-medium">الباكيج الثلاثي</span>
+                            <span className="font-arabic font-bold text-primary">{offer.priceDetails.triplePackage} {t('offers.currency')}</span>
                           </div>
                         )}
-                        {offer.priceDetails.quad && (
+                        {offer.priceDetails.quadPackage && (
                           <div className="flex justify-between items-center bg-background rounded px-2 py-1">
-                            <span className="font-arabic text-sm font-medium">{t('offers.quad')}</span>
-                            <span className="font-arabic font-bold text-primary">{offer.priceDetails.quad} {t('offers.currency')}</span>
+                            <span className="font-arabic text-sm font-medium">الباكيج الرباعي</span>
+                            <span className="font-arabic font-bold text-primary">{offer.priceDetails.quadPackage} {t('offers.currency')}</span>
                           </div>
                         )}
-                        {offer.priceDetails.penta && (
+                        {offer.priceDetails.child && (
                           <div className="flex justify-between items-center bg-background rounded px-2 py-1">
-                            <span className="font-arabic text-sm font-medium">{t('offers.penta')}</span>
-                            <span className="font-arabic font-bold text-primary">{offer.priceDetails.penta} {t('offers.currency')}</span>
+                            <span className="font-arabic text-sm font-medium">سعر الطفل</span>
+                            <span className="font-arabic font-bold text-primary">{offer.priceDetails.child} {t('offers.currency')}</span>
                           </div>
                         )}
-                        {/* عرض الأسعار الديناميكية */}
-                        {offer.dynamicPrices && Object.keys(offer.dynamicPrices).map((priceKey) => (
-                          <div key={priceKey} className="flex justify-between items-center bg-background rounded px-2 py-1">
-                            <span className="font-arabic text-sm font-medium">
-                              {offer.dynamicPrices![priceKey].displayName}
-                            </span>
-                            <span className="font-arabic font-bold text-primary">
-                              {offer.dynamicPrices![priceKey].value} {t('offers.currency')}
-                            </span>
-                          </div>
-                        ))}
                       </div>
+                    </div>
+
+                    {/* معلومات إضافية */}
+                    <div className="mb-4 space-y-2">
+                      {offer.roomType && (
+                        <div className="flex items-center text-sm">
+                          <Building2 className="h-4 w-4 text-primary ml-2" />
+                          <span className="font-arabic text-muted-foreground">نوع الغرفة: {offer.roomType}</span>
+                        </div>
+                      )}
+                      {offer.departureDate && (
+                        <div className="flex items-center text-sm">
+                          <Calendar className="h-4 w-4 text-primary ml-2" />
+                          <span className="font-arabic text-muted-foreground">
+                            الذهاب: {offer.departureDate} {offer.departureTime && `- ${offer.departureTime}`}
+                          </span>
+                        </div>
+                      )}
+                      {offer.returnDate && (
+                        <div className="flex items-center text-sm">
+                          <Calendar className="h-4 w-4 text-primary ml-2" />
+                          <span className="font-arabic text-muted-foreground">
+                            العودة: {offer.returnDate} {offer.returnTime && `- ${offer.returnTime}`}
+                          </span>
+                        </div>
+                      )}
                     </div>
 
                     {/* الأزرار */}
