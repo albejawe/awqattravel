@@ -8,7 +8,7 @@ const Footer = () => {
   
   const handleWhatsAppContact = () => {
     const message = "أرغب بالاستفسار عن خدماتكم";
-    const whatsappUrl = `https://wa.me/962777799212?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/96522289080?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
@@ -29,8 +29,8 @@ const Footer = () => {
           {/* Company Info */}
           <div className="mb-8">
             <img 
-              src="/lovable-uploads/efeedaa4-d580-4b6f-a9d4-ceb2d2d3bd2b.png" 
-              alt="Al Dahab Travel Gold" 
+              src="/lovable-uploads/awqat-logo.png" 
+              alt="شركة أوقات للسياحة والسفر" 
               className="h-16 mx-auto mb-4 filter brightness-0 invert"
             />
             <div className="flex items-center justify-center mb-4 font-arabic">

@@ -15,11 +15,11 @@
     --popover: 0 0% 100%;
     --popover-foreground: 30 8% 15%;
 
-    /* Golden luxury colors */
-    --primary: 43 96% 56%;
+    /* AWQAT Blue luxury colors - inspired by logo */
+    --primary: 220 100% 50%;
     --primary-foreground: 0 0% 100%;
-    --primary-dark: 38 85% 45%;
-    --primary-light: 45 98% 70%;
+    --primary-dark: 217 91% 35%;
+    --primary-light: 215 100% 65%;
 
     --secondary: 45 25% 95%;
     --secondary-foreground: 30 8% 15%;
@@ -27,7 +27,7 @@
     --muted: 45 15% 97%;
     --muted-foreground: 30 8% 46%;
 
-    --accent: 43 96% 56%;
+    --accent: 220 100% 50%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -35,17 +35,17 @@
 
     --border: 45 15% 90%;
     --input: 45 15% 95%;
-    --ring: 43 96% 56%;
+    --ring: 220 100% 50%;
 
-    /* Custom golden gradients */
-    --gradient-gold: linear-gradient(135deg, hsl(43, 96%, 56%) 0%, hsl(38, 85%, 45%) 50%, hsl(30, 75%, 35%) 100%);
-    --gradient-gold-light: linear-gradient(135deg, hsl(45, 98%, 70%) 0%, hsl(43, 96%, 56%) 100%);
-    --gradient-gold-dark: linear-gradient(135deg, hsl(38, 85%, 45%) 0%, hsl(30, 75%, 35%) 100%);
-    --gradient-elegant: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(45, 25%, 95%) 50%, hsl(43, 96%, 96%) 100%);
+    /* Custom AWQAT blue gradients */
+    --gradient-gold: linear-gradient(135deg, hsl(220, 100%, 50%) 0%, hsl(217, 91%, 35%) 50%, hsl(214, 80%, 25%) 100%);
+    --gradient-gold-light: linear-gradient(135deg, hsl(215, 100%, 65%) 0%, hsl(220, 100%, 50%) 100%);
+    --gradient-gold-dark: linear-gradient(135deg, hsl(217, 91%, 35%) 0%, hsl(214, 80%, 25%) 100%);
+    --gradient-elegant: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(220, 25%, 95%) 50%, hsl(220, 50%, 96%) 100%);
 
-    /* Shadows with golden glow */
-    --shadow-gold: 0 10px 30px -10px hsl(43 96% 56% / 0.3);
-    --shadow-gold-strong: 0 20px 40px -15px hsl(43 96% 56% / 0.4);
+    /* Shadows with blue glow */
+    --shadow-gold: 0 10px 30px -10px hsl(220 100% 50% / 0.3);
+    --shadow-gold-strong: 0 20px 40px -15px hsl(220 100% 50% / 0.4);
     --shadow-elegant: 0 4px 20px -4px hsl(30 8% 15% / 0.1);
 
     /* Animation timing */
@@ -81,10 +81,10 @@
     --popover: 30 8% 12%;
     --popover-foreground: 45 25% 95%;
 
-    --primary: 43 96% 56%;
+    --primary: 220 100% 50%;
     --primary-foreground: 30 8% 8%;
-    --primary-dark: 38 85% 45%;
-    --primary-light: 45 98% 70%;
+    --primary-dark: 217 91% 35%;
+    --primary-light: 215 100% 65%;
 
     --secondary: 30 8% 15%;
     --secondary-foreground: 45 25% 95%;
@@ -92,7 +92,7 @@
     --muted: 30 8% 15%;
     --muted-foreground: 45 15% 65%;
 
-    --accent: 43 96% 56%;
+    --accent: 220 100% 50%;
     --accent-foreground: 30 8% 8%;
 
     --destructive: 0 84% 60%;
@@ -100,15 +100,15 @@
 
     --border: 30 8% 20%;
     --input: 30 8% 20%;
-    --ring: 43 96% 56%;
+    --ring: 220 100% 50%;
 
-    --gradient-gold: linear-gradient(135deg, hsl(43, 96%, 56%) 0%, hsl(38, 85%, 45%) 50%, hsl(30, 75%, 35%) 100%);
-    --gradient-gold-light: linear-gradient(135deg, hsl(45, 98%, 70%) 0%, hsl(43, 96%, 56%) 100%);
-    --gradient-gold-dark: linear-gradient(135deg, hsl(38, 85%, 45%) 0%, hsl(30, 75%, 35%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(220, 100%, 50%) 0%, hsl(217, 91%, 35%) 50%, hsl(214, 80%, 25%) 100%);
+    --gradient-gold-light: linear-gradient(135deg, hsl(215, 100%, 65%) 0%, hsl(220, 100%, 50%) 100%);
+    --gradient-gold-dark: linear-gradient(135deg, hsl(217, 91%, 35%) 0%, hsl(214, 80%, 25%) 100%);
     --gradient-elegant: linear-gradient(135deg, hsl(30, 8%, 12%) 0%, hsl(30, 8%, 15%) 50%, hsl(30, 8%, 18%) 100%);
 
-    --shadow-gold: 0 10px 30px -10px hsl(43 96% 56% / 0.5);
-    --shadow-gold-strong: 0 20px 40px -15px hsl(43 96% 56% / 0.6);
+    --shadow-gold: 0 10px 30px -10px hsl(220 100% 50% / 0.5);
+    --shadow-gold-strong: 0 20px 40px -15px hsl(220 100% 50% / 0.6);
     --shadow-elegant: 0 4px 20px -4px hsl(0 0% 0% / 0.3);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;

@@ -38,8 +38,8 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center">
             <img 
-              src="/lovable-uploads/efeedaa4-d580-4b6f-a9d4-ceb2d2d3bd2b.png" 
-              alt="Al Dahab Travel Gold" 
+              src="/lovable-uploads/awqat-logo.png" 
+              alt="شركة أوقات للسياحة والسفر" 
               className="h-12 w-auto"
             />
           </div>

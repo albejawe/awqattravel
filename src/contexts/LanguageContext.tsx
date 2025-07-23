@@ -15,10 +15,10 @@ const translations = {
     'language.toggle': 'ع',
     
     // Hero
-    'hero.title': 'رحلات فاخرة',
-    'hero.subtitle': 'في عالم الدهب، نأخذك في رحلة فاخرة لا تشبه أي رحلة أخرى',
-    'hero.description': 'اكتشف أجمل الوجهات السياحية مع باقات مميزة وخدمات فاخرة',
-    'hero.cta': 'اكتشف أقوى العروض',
+    'hero.title': 'عروض شركة أوقات للسياحة والسفر',
+    'hero.subtitle': 'مختصون في عروض العمرة والسياحة والفيزا منذ أكثر من 10 أعوام',
+    'hero.description': 'اكتشف أجمل الوجهات السياحية مع باقات مميزة وخدمات متخصصة',
+    'hero.cta': 'اكتشف عروضنا المميزة',
     
     // Travel Offers
     'offers.title': 'عروض السفر',
@@ -40,7 +40,7 @@ const translations = {
     'offers.triple': 'السعر للشخص في الغرفة الثلاثية',
     'offers.quad': 'السعر للشخص في الغرفة الرباعية',
     'offers.penta': 'السعر للشخص في الغرفة الخماسية',
-    'offers.currency': 'د.أ',
+    'offers.currency': 'د.ك',
     'offers.rating': 'التقييم',
     'offers.days': 'أيام',
     'offers.offersFound': 'تم العثور على',
@@ -48,23 +48,23 @@ const translations = {
     
     // Footer
     'footer.whatsapp': 'تواصل عبر الواتساب',
-    'footer.address': 'عمان - الصويفية - شارع زهران',
-    'footer.company': 'الدهب للسياحة والسفر - ALDahab Travel & Tourism',
+    'footer.address': 'حولي - شارع تونس - بناية هيا (الكويت)',
+    'footer.company': 'شركة أوقات للسياحة والسفر - AWQAT Travel & Tourism',
     'footer.rights': 'جميع الحقوق محفوظة.',
     'footer.aboutUs': 'من نحن',
     
     // About Page
     'about.title': 'من نحن؟',
-    'about.companyName': 'الدهب للسياحة والسفر',
-    'about.description1': 'في عالم السفر، نتفرد بتقديم خدمات ذات خبرة عالية، حيث نعتني بأدق التفاصيل لضمان تجربة سفر فاخرة ومريحة.',
-    'about.description2': 'في عالم الدهب، نأخذك في رحلة فاخرة لا تشبه أي رحلة أخرى.',
+    'about.companyName': 'شركة أوقات للسياحة والسفر',
+    'about.description1': 'مختصون في عروض العمرة والسياحة والفيزا منذ أكثر من 10 أعوام، نقدم خدمات متخصصة وموثوقة.',
+    'about.description2': 'في شركة أوقات، نأخذك في رحلة مميزة بأفضل الأسعار وأجود الخدمات.',
     'about.services.tourism': 'برامج سياحية',
     'about.services.tourism.desc': 'برامج مصممة بعناية لتقديم تجربة فريدة',
     'about.services.hotels': 'حجوزات فنادق',
     'about.services.hotels.desc': 'احجز إقامتك بسهولة بما يناسب احتياجاتك',
     'about.services.flights': 'تذاكر طيران',
     'about.services.flights.desc': 'حجوزات فعّالة وموثوقة لضمان وصولك إلى وجهتك',
-    'about.whyChoose': 'لماذا تختار الدهب للسياحة؟',
+    'about.whyChoose': 'لماذا تختار شركة أوقات للسياحة؟',
     'about.luxury': 'رفاهية لا مثيل لها',
     'about.luxury.desc': 'خدمات فاخرة تضمن راحتك وسعادتك',
     'about.experience': 'خبرة واحترافية',
@@ -82,10 +82,10 @@ const translations = {
     'language.toggle': 'en',
     
     // Hero
-    'hero.title': 'Luxury Travel',
-    'hero.subtitle': 'In the world of gold, we take you on a luxury journey like no other',
-    'hero.description': 'Discover the most beautiful tourist destinations with exclusive packages and luxury services',
-    'hero.cta': 'Discover Our Best Offers',
+    'hero.title': 'AWQAT Travel & Tourism Offers',
+    'hero.subtitle': 'Specialists in Umrah, Tourism and Visa offers for over 10 years',
+    'hero.description': 'Discover the most beautiful tourist destinations with specialized packages and professional services',
+    'hero.cta': 'Discover Our Special Offers',
     
     // Travel Offers
     'offers.title': 'Travel Offers',
@@ -107,7 +107,7 @@ const translations = {
     'offers.triple': 'Price per person in triple room',
     'offers.quad': 'Price per person in quad room',
     'offers.penta': 'Price per person in penta room',
-    'offers.currency': 'JD',
+    'offers.currency': 'KD',
     'offers.rating': 'Rating',
     'offers.days': 'days',
     'offers.offersFound': 'Found',
@@ -115,23 +115,23 @@ const translations = {
     
     // Footer
     'footer.whatsapp': 'Contact via WhatsApp',
-    'footer.address': 'Amman - Sweifieh - Zahran Street',
-    'footer.company': 'Al Dahab Travel & Tourism - الدهب للسياحة والسفر',
+    'footer.address': 'Hawalli - Tunisia Street - Haya Building (Kuwait)',
+    'footer.company': 'AWQAT Travel & Tourism - شركة أوقات للسياحة والسفر',
     'footer.rights': 'All rights reserved.',
     'footer.aboutUs': 'About Us',
     
     // About Page
     'about.title': 'About Us',
-    'about.companyName': 'Al Dahab Travel & Tourism',
-    'about.description1': 'In the world of travel, we excel at providing high-expertise services, taking care of the finest details to ensure a luxurious and comfortable travel experience.',
-    'about.description2': 'In the world of Al Dahab, we take you on a luxury journey like no other.',
+    'about.companyName': 'AWQAT Travel & Tourism',
+    'about.description1': 'Specialists in Umrah, Tourism and Visa offers for over 10 years, we provide specialized and reliable services.',
+    'about.description2': 'At AWQAT company, we take you on a special journey with the best prices and finest services.',
     'about.services.tourism': 'Tourism Programs',
     'about.services.tourism.desc': 'Carefully designed programs to provide a unique experience',
     'about.services.hotels': 'Hotel Reservations',
     'about.services.hotels.desc': 'Book your stay easily to suit your needs',
     'about.services.flights': 'Flight Tickets',
     'about.services.flights.desc': 'Efficient and reliable bookings to ensure you reach your destination',
-    'about.whyChoose': 'Why Choose Al Dahab Travel?',
+    'about.whyChoose': 'Why Choose AWQAT Travel?',
     'about.luxury': 'Unmatched Luxury',
     'about.luxury.desc': 'Luxury services that ensure your comfort and happiness',
     'about.experience': 'Experience and Professionalism',

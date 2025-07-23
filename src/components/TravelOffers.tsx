@@ -86,7 +86,7 @@ const TravelOffers = () => {
   const fetchOffers = async () => {
     try {
       const response = await fetch(
-        "https://docs.google.com/spreadsheets/d/e/2PACX-1vRMcMfkAS8dlyVnF6uceIHmW9fktEWFETPS_5zPyinfTAkjDN2V-MgZAD_bYs85TRPp7NznPxegvnLX/pub?output=csv"
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vSb5LJUCZ515nV3viDkhB8_UeR--ddYsOk_HhrgHW-549EfRsZFK0DugpjifPmW3N2hniJ83HscMuy9/pub?output=csv"
       );
       const csvText = await response.text();
       
@@ -154,13 +154,13 @@ const TravelOffers = () => {
               // تحديد السعر المعروض أولاً
               let displayPrice = "";
               if (priceDetails.double) {
-                displayPrice = `${priceDetails.double} د.أ`;
+                displayPrice = `${priceDetails.double} د.ك`;
               } else if (priceDetails.single) {
-                displayPrice = `${priceDetails.single} د.أ`;
+                displayPrice = `${priceDetails.single} د.ك`;
               } else if (Object.keys(dynamicPrices).length > 0) {
                 // استخدام أول سعر ديناميكي إذا لم توجد أسعار ثابتة
                 const firstDynamicPrice = Object.values(dynamicPrices)[0] as any;
-                displayPrice = `${firstDynamicPrice.value} د.أ`;
+                displayPrice = `${firstDynamicPrice.value} د.ك`;
               }
 
               return {
@@ -186,12 +186,12 @@ const TravelOffers = () => {
 ${row["عدد ايام البرنامج"] && row["عدد ايام البرنامج"] !== "" ? `- مدة الرحلة: ${row["عدد ايام البرنامج"]} أيام` : ""}
 
 الأسعار:
-${priceDetails.single ? `- السعر للفرد: ${priceDetails.single} د.أ` : ""}
-${priceDetails.double ? `- السعر للمزدوج: ${priceDetails.double} د.أ` : ""}
-${priceDetails.triple ? `- السعر للثلاثي: ${priceDetails.triple} د.أ` : ""}
-${priceDetails.quad ? `- السعر للرباعي: ${priceDetails.quad} د.أ` : ""}
-${priceDetails.penta ? `- السعر للخماسي: ${priceDetails.penta} د.أ` : ""}
-${Object.keys(dynamicPrices).map(key => `- ${dynamicPrices[key].displayName}: ${dynamicPrices[key].value} د.أ`).join('\n')}`,
+${priceDetails.single ? `- السعر للفرد: ${priceDetails.single} د.ك` : ""}
+${priceDetails.double ? `- السعر للمزدوج: ${priceDetails.double} د.ك` : ""}
+${priceDetails.triple ? `- السعر للثلاثي: ${priceDetails.triple} د.ك` : ""}
+${priceDetails.quad ? `- السعر للرباعي: ${priceDetails.quad} د.ك` : ""}
+${priceDetails.penta ? `- السعر للخماسي: ${priceDetails.penta} د.ك` : ""}
+${Object.keys(dynamicPrices).map(key => `- ${dynamicPrices[key].displayName}: ${dynamicPrices[key].value} د.ك`).join('\n')}`,
                 rating: parseFloat(row["Score"]) || 5
               };
             });
@@ -232,7 +232,7 @@ ${Object.keys(dynamicPrices).map(key => `- ${dynamicPrices[key].displayName}: ${
 
   const handleBookNow = (offer: TravelOffer) => {
     const message = `أرغب بحجز عرض: ${offer.title}`;
-    const whatsappUrl = `https://wa.me/962777799212?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/96522289080?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
