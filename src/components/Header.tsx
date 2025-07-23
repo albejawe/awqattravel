@@ -38,7 +38,7 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center">
             <img 
-              src="/lovable-uploads/awqat-logo.png" 
+              src="/lovable-uploads/1ed71778-e792-40a8-8405-33112955d820.png" 
               alt="شركة أوقات للسياحة والسفر" 
               className="h-12 w-auto"
             />

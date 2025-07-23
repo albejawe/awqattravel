@@ -516,7 +516,7 @@ ${Object.keys(dynamicPrices).map(key => `- ${dynamicPrices[key].displayName}: ${
                           <span className="text-white text-4xl">🌍</span>
                         </div>
                       )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+                      <div className="absolute inset-0 bg-gradient-to-b from-primary/40 via-primary/60 to-black/80"></div>
                       <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
                         <h3 className="text-2xl font-bold font-arabic mb-2 group-hover:text-primary transition-colors">
                           {category}
