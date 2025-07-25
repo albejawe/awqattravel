@@ -301,7 +301,7 @@ ${priceDetails.child ? `- سعر الطفل: ${priceDetails.child} د.ك` : ""}`
     for (let i = 0; i < fullStars; i++) {
       stars.push(<Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />);
     }
-    return;
+    return <div className="flex">{stars}</div>;
   };
   const openImageGallery = (images: string[], index: number = 0) => {
     setGalleryImages(images);
@@ -441,7 +441,7 @@ ${priceDetails.child ? `- سعر الطفل: ${priceDetails.child} د.ك` : ""}`
                     </div>
 
                     {/* اسم الفندق والتقييم */}
-                    <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center">
                         <Building2 className="h-4 w-4 text-primary ml-2" />
                         <span className="text-muted-foreground font-arabic text-sm">
@@ -450,6 +450,15 @@ ${priceDetails.child ? `- سعر الطفل: ${priceDetails.child} د.ك` : ""}`
                       </div>
                       {renderStars(offer.rating)}
                     </div>
+
+                    {/* نوع الغرفة */}
+                    {offer.roomType && (
+                      <div className="mb-3">
+                        <span className="font-arabic text-muted-foreground text-sm">
+                          نوع الغرفة: {offer.roomType}
+                        </span>
+                      </div>
+                    )}
 
                     {/* اسم الطيران */}
                     <div className="mb-4">
@@ -460,6 +469,30 @@ ${priceDetails.child ? `- سعر الطفل: ${priceDetails.child} د.ك` : ""}`
                         </span>
                       </div>
                     </div>
+
+                    {/* تواريخ الذهاب والعودة */}
+                    {(offer.departureDate || offer.returnDate) && (
+                      <div className="mb-4 bg-muted/30 rounded-lg p-3">
+                        <div className="space-y-2">
+                          {offer.departureDate && (
+                            <div className="flex items-center text-sm">
+                              <Calendar className="h-4 w-4 text-primary ml-2" />
+                              <span className="font-arabic text-muted-foreground">
+                                الذهاب: {offer.departureDate} {offer.departureTime && `- ${offer.departureTime}`}
+                              </span>
+                            </div>
+                          )}
+                          {offer.returnDate && (
+                            <div className="flex items-center text-sm">
+                              <Calendar className="h-4 w-4 text-primary ml-2" />
+                              <span className="font-arabic text-muted-foreground">
+                                العودة: {offer.returnDate} {offer.returnTime && `- ${offer.returnTime}`}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
 
                     {/* الأسعار */}
                     <div className="mb-4 bg-muted/50 rounded-lg p-3">
@@ -488,25 +521,6 @@ ${priceDetails.child ? `- سعر الطفل: ${priceDetails.child} د.ك` : ""}`
                       </div>
                     </div>
 
-                    {/* معلومات إضافية */}
-                    <div className="mb-4 space-y-2">
-                      {offer.roomType && <div className="flex items-center text-sm">
-                          <Building2 className="h-4 w-4 text-primary ml-2" />
-                          <span className="font-arabic text-muted-foreground">نوع الغرفة: {offer.roomType}</span>
-                        </div>}
-                      {offer.departureDate && <div className="flex items-center text-sm">
-                          <Calendar className="h-4 w-4 text-primary ml-2" />
-                          <span className="font-arabic text-muted-foreground">
-                            الذهاب: {offer.departureDate} {offer.departureTime && `- ${offer.departureTime}`}
-                          </span>
-                        </div>}
-                      {offer.returnDate && <div className="flex items-center text-sm">
-                          <Calendar className="h-4 w-4 text-primary ml-2" />
-                          <span className="font-arabic text-muted-foreground">
-                            العودة: {offer.returnDate} {offer.returnTime && `- ${offer.returnTime}`}
-                          </span>
-                        </div>}
-                    </div>
 
                     {/* الأزرار */}
                     <div className="offer-buttons space-y-2">
