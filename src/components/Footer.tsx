@@ -27,11 +27,6 @@ const Footer = () => {
 
           {/* Company Info */}
           <div className="mb-8">
-            <img 
-              src="/lovable-uploads/1ed71778-e792-40a8-8405-33112955d820.png" 
-              alt="شركة أوقات للسياحة والسفر" 
-              className="h-16 mx-auto mb-4 filter brightness-0 invert"
-            />
             <div className="flex items-center justify-center mb-4 font-arabic">
               <MapPin className={`h-5 w-5 ${direction === 'rtl' ? 'mr-2' : 'ml-2'}`} />
               <span>{t('footer.address')}</span>

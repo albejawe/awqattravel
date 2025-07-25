@@ -280,7 +280,7 @@ const ChaletsOffers = () => {
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                      <div className="absolute bottom-4 left-4 text-white">
+                      <div className="absolute bottom-4 right-4 text-white text-right">
                         <h3 className="text-2xl font-bold font-arabic">{category}</h3>
                         <p className="text-sm opacity-90 font-arabic">
                           {categoryOffers.length} {categoryOffers.length === 1 ? 'وحدة' : 'وحدات'}
@@ -296,16 +296,25 @@ const ChaletsOffers = () => {
       ) : (
         <div>
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold font-arabic text-white">
+            <h2 className="text-3xl font-bold font-arabic text-foreground text-right">
               {selectedCategory} ({filteredOffers.length} وحدة)
             </h2>
-            <Button
-              onClick={() => setSelectedCategory(null)}
-              variant="outline"
-              className="font-arabic"
-            >
-              العودة للفئات
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                onClick={() => window.open('https://awqattravel.com/', '_blank')}
+                variant="outline"
+                className="font-arabic"
+              >
+                الصفحة الرئيسية
+              </Button>
+              <Button
+                onClick={() => setSelectedCategory(null)}
+                variant="outline"
+                className="font-arabic"
+              >
+                العودة للفئات
+              </Button>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
@@ -330,26 +339,26 @@ const ChaletsOffers = () => {
 
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <div>
+                    <div className="text-right">
                       <h3 className="text-xl font-bold font-arabic text-primary mb-2">{offer.name}</h3>
                       
-                      <div className="flex flex-wrap gap-2 mb-4">
+                      <div className="flex flex-wrap gap-2 mb-4 justify-end">
                         {offer.rooms && (
                           <Badge variant="secondary" className="font-arabic text-xs">
                             <Home className="h-3 w-3 mr-1" />
-                            {offer.rooms} غرف
+                            غرف x {offer.rooms}
                           </Badge>
                         )}
                         {offer.floors && (
                           <Badge variant="secondary" className="font-arabic text-xs">
                             <Layers className="h-3 w-3 mr-1" />
-                            {offer.floors} أدوار
+                            أدوار x {offer.floors}
                           </Badge>
                         )}
                         {offer.bathrooms && (
                           <Badge variant="secondary" className="font-arabic text-xs">
                             <Bath className="h-3 w-3 mr-1" />
-                            {offer.bathrooms} حمامات
+                            حمامات x {offer.bathrooms}
                           </Badge>
                         )}
                       </div>
@@ -384,7 +393,7 @@ const ChaletsOffers = () => {
                     </div>
 
                     <div className="space-y-3">
-                      {offer.price1 && (
+                      {offer.price1 && offer.priceLabel1 && (
                         <div className="flex justify-between items-center p-3 bg-muted rounded-lg">
                           <div className="font-arabic">
                             <div className="font-bold text-primary">{offer.priceLabel1}</div>
@@ -398,7 +407,7 @@ const ChaletsOffers = () => {
                         </div>
                       )}
 
-                      {offer.price2 && (
+                      {offer.price2 && offer.priceLabel2 && (
                         <div className="flex justify-between items-center p-3 bg-muted rounded-lg">
                           <div className="font-arabic">
                             <div className="font-bold text-primary">{offer.priceLabel2}</div>
@@ -412,7 +421,7 @@ const ChaletsOffers = () => {
                         </div>
                       )}
 
-                      {offer.price3 && (
+                      {offer.price3 && offer.priceLabel3 && (
                         <div className="flex justify-between items-center p-3 bg-muted rounded-lg">
                           <div className="font-arabic">
                             <div className="font-bold text-primary">{offer.priceLabel3}</div>
