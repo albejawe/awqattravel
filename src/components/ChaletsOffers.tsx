@@ -307,15 +307,13 @@ const ChaletsOffers = () => {
             <div className="flex gap-2">
               <Button
                 onClick={() => window.open('https://awqattravel.com/', '_blank')}
-                variant="outline"
-                className="font-arabic"
+                className="font-arabic bg-blue-600 hover:bg-blue-700 text-white"
               >
                 عروض العمرة والسياحة
               </Button>
               <Button
                 onClick={() => setSelectedCategory(null)}
-                variant="outline"
-                className="font-arabic"
+                className="font-arabic bg-orange-500 hover:bg-orange-600 text-white"
               >
                 العودة للفئات
               </Button>
