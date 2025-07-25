@@ -21,7 +21,7 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Navigation */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 hidden">
             <Button onClick={() => navigate('/')} variant={location.pathname === '/' ? 'default' : 'ghost'} size="sm">
               الرئيسية
             </Button>
