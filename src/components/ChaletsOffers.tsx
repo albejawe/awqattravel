@@ -257,7 +257,7 @@ const ChaletsOffers = () => {
           </h1>
           <p className="text-xl text-muted-foreground font-arabic max-w-2xl mx-auto">
             {selectedCategory 
-              ? `${filteredOffers.length} ${filteredOffers.length === 1 ? 'وحدة متاحة' : 'وحدة متاحة'}`
+              ? `${filteredOffers.length} ${filteredOffers.length === 1 ? 'وحدة متاحة' : 'وحدات متاحة'}`
               : 'استمتع بإقامة فاخرة في أجمل المواقع السياحية'
             }
           </p>
