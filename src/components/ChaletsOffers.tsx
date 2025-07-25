@@ -14,8 +14,9 @@ import resortHeroBg from '@/assets/resort-hero-bg.jpg';
 interface ChaletOffer {
   category: string;
   name: string;
-  rooms: string;
   floors: string;
+  masterRooms: string;
+  regularRooms: string;
   bathrooms: string;
   facilities: string;
   priceLabel1: string;
@@ -80,8 +81,9 @@ const ChaletsOffers = () => {
             return {
               category: row['الفئة'] || '',
               name: row['الاسم'] || '',
-              rooms: row['عدد الغرف'] || '',
               floors: row['عدد الادوار'] || '',
+              masterRooms: row['عدد الغرف الماستر'] || '',
+              regularRooms: row['عدد الغرف العادية'] || '',
               bathrooms: row['عدد الحمامات'] || '',
               facilities: row['المرافق'] || '',
               priceLabel1: row['تسمية السعر 1'] || '',
@@ -343,22 +345,28 @@ const ChaletsOffers = () => {
                       <h3 className="text-xl font-bold font-arabic text-primary mb-2">{offer.name}</h3>
                       
                       <div className="flex flex-wrap gap-2 mb-4 justify-end">
-                        {offer.rooms && (
-                          <Badge variant="secondary" className="font-arabic text-xs">
-                            <Home className="h-3 w-3 mr-1" />
-                            غرف x {offer.rooms}
-                          </Badge>
-                        )}
                         {offer.floors && (
                           <Badge variant="secondary" className="font-arabic text-xs">
                             <Layers className="h-3 w-3 mr-1" />
-                            أدوار x {offer.floors}
+                            عدد الأدوار ({offer.floors})
+                          </Badge>
+                        )}
+                        {offer.masterRooms && (
+                          <Badge variant="secondary" className="font-arabic text-xs">
+                            <Home className="h-3 w-3 mr-1" />
+                            غرف ماستر ({offer.masterRooms})
+                          </Badge>
+                        )}
+                        {offer.regularRooms && (
+                          <Badge variant="secondary" className="font-arabic text-xs">
+                            <Home className="h-3 w-3 mr-1" />
+                            غرف عادية ({offer.regularRooms})
                           </Badge>
                         )}
                         {offer.bathrooms && (
                           <Badge variant="secondary" className="font-arabic text-xs">
                             <Bath className="h-3 w-3 mr-1" />
-                            حمامات x {offer.bathrooms}
+                            عدد الحمامات ({offer.bathrooms})
                           </Badge>
                         )}
                       </div>
