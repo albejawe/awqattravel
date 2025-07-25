@@ -14,6 +14,7 @@ interface Category {
   slug: string;
   description: string | null;
   color: string;
+  category_url: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -28,6 +29,7 @@ const AdminCategories = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [color, setColor] = useState("#6366f1");
+  const [categoryUrl, setCategoryUrl] = useState("");
 
   useEffect(() => {
     loadCategories();
@@ -74,6 +76,7 @@ const AdminCategories = () => {
         name,
         description: description || null,
         color,
+        category_url: categoryUrl || null,
         slug: editingCategory ? editingCategory.slug : generateSlug(name),
       };
 
@@ -112,6 +115,7 @@ const AdminCategories = () => {
     setName(category.name);
     setDescription(category.description || '');
     setColor(category.color);
+    setCategoryUrl(category.category_url || '');
     setIsCreating(true);
   };
 
@@ -143,6 +147,7 @@ const AdminCategories = () => {
     setName("");
     setDescription("");
     setColor("#6366f1");
+    setCategoryUrl("");
     setIsCreating(false);
     setEditingCategory(null);
   };
@@ -210,6 +215,17 @@ const AdminCategories = () => {
               </div>
             </div>
 
+            <div>
+              <Label htmlFor="categoryUrl">رابط الفئة (اختياري)</Label>
+              <Input
+                id="categoryUrl"
+                value={categoryUrl}
+                onChange={(e) => setCategoryUrl(e.target.value)}
+                placeholder="https://example.com/category"
+                type="url"
+              />
+            </div>
+
             <div className="flex gap-2">
               <Button onClick={saveCategory}>
                 {editingCategory ? 'تحديث الفئة' : 'حفظ الفئة'}
@@ -238,8 +254,21 @@ const AdminCategories = () => {
                   {category.description && (
                     <p className="text-muted-foreground mb-2">{category.description}</p>
                   )}
-                  <div className="text-sm text-muted-foreground">
-                    الرابط: {category.slug}
+                  <div className="text-sm text-muted-foreground space-y-1">
+                    <div>الرابط: {category.slug}</div>
+                    {category.category_url && (
+                      <div>
+                        رابط خارجي: 
+                        <a 
+                          href={category.category_url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-primary hover:underline mr-1"
+                        >
+                          {category.category_url}
+                        </a>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="flex gap-2">

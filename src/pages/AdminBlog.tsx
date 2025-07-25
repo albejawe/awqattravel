@@ -14,6 +14,8 @@ import { ArrowLeft, Wand2, Upload, Link, Save, Eye, Tag, Palette, Clock, Sparkle
 import { User } from "@supabase/supabase-js";
 import RichTextEditor from "@/components/RichTextEditor";
 import AdminCategories from "@/components/AdminCategories";
+import BlogImportExport from "@/components/BlogImportExport";
+import BlogBulkActions from "@/components/BlogBulkActions";
 
 interface Blog {
   id: string;
@@ -32,6 +34,7 @@ interface Blog {
   meta_title?: string;
   meta_description?: string;
   reading_time?: number;
+  article_url?: string;
 }
 
 interface Category {
@@ -40,6 +43,7 @@ interface Category {
   slug: string;
   description: string | null;
   color: string;
+  category_url: string | null;
 }
 
 const AdminBlog = () => {
@@ -52,6 +56,10 @@ const AdminBlog = () => {
   const [generating, setGenerating] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [generatingTitle, setGeneratingTitle] = useState(false);
+  const [generatingSEO, setGeneratingSEO] = useState(false);
+  const [selectedBlogs, setSelectedBlogs] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [blogsPerPage, setBlogsPerPage] = useState(10);
   
   // Form state
   const [title, setTitle] = useState("");
@@ -63,6 +71,7 @@ const AdminBlog = () => {
   const [tags, setTags] = useState<string>("");
   const [metaTitle, setMetaTitle] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
+  const [articleUrl, setArticleUrl] = useState("");
   
   const navigate = useNavigate();
 
@@ -174,6 +183,54 @@ const AdminBlog = () => {
       });
     } finally {
       setGeneratingTitle(false);
+    }
+  };
+
+  const generateSEO = async () => {
+    if (!title.trim()) {
+      toast({
+        title: "خطأ",
+        description: "يرجى إدخال العنوان أولاً",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setGeneratingSEO(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-blog-content', {
+        body: { 
+          prompt: `اكتب عنوان SEO محسن ووصف meta مناسب لمحركات البحث (لا يتجاوز 160 حرف) لمقال سفر بعنوان: "${title}". يجب أن يكون محسن للبحث باللغة العربية ويحتوي على كلمات مفتاحية مهمة.`,
+          type: 'seo'
+        }
+      });
+
+      if (error) throw error;
+
+      const content = data.content;
+      // استخراج العنوان والوصف من المحتوى المولد
+      const lines = content.split('\n').filter((line: string) => line.trim());
+      
+      if (lines.length >= 2) {
+        setMetaTitle(lines[0].replace(/^عنوان SEO:\s*/, '').trim());
+        setMetaDescription(lines[1].replace(/^وصف meta:\s*/, '').trim());
+      } else {
+        setMetaTitle(title);
+        setMetaDescription(content.substring(0, 160));
+      }
+      
+      toast({
+        title: "تم توليد بيانات SEO",
+        description: "تم إنشاء عنوان ووصف محسن لمحركات البحث",
+      });
+    } catch (error) {
+      toast({
+        title: "خطأ",
+        description: "فشل في توليد بيانات SEO",
+        variant: "destructive",
+      });
+    } finally {
+      setGeneratingSEO(false);
     }
   };
 
@@ -297,6 +354,7 @@ const AdminBlog = () => {
         tags: tagsArray.length > 0 ? tagsArray : null,
         meta_title: metaTitle || title,
         meta_description: metaDescription || excerpt,
+        article_url: articleUrl || null,
         ...(status === 'published' && { published_at: new Date().toISOString() })
       };
 
@@ -341,6 +399,7 @@ const AdminBlog = () => {
     setTags(blog.tags ? blog.tags.join(', ') : '');
     setMetaTitle(blog.meta_title || '');
     setMetaDescription(blog.meta_description || '');
+    setArticleUrl(blog.article_url || '');
     setIsCreating(true);
   };
 
@@ -378,6 +437,7 @@ const AdminBlog = () => {
     setTags("");
     setMetaTitle("");
     setMetaDescription("");
+    setArticleUrl("");
     setIsCreating(false);
     setEditingBlog(null);
   };
@@ -424,10 +484,11 @@ const AdminBlog = () => {
             </CardHeader>
             <CardContent>
               <Tabs defaultValue="content" className="w-full">
-                <TabsList className="grid w-full grid-cols-3">
+                <TabsList className="grid w-full grid-cols-4">
                   <TabsTrigger value="content">المحتوى</TabsTrigger>
                   <TabsTrigger value="seo">SEO</TabsTrigger>
                   <TabsTrigger value="categories">الفئات</TabsTrigger>
+                  <TabsTrigger value="manage">إدارة المقالات</TabsTrigger>
                 </TabsList>
                 
                 <TabsContent value="content" className="space-y-6">
@@ -571,6 +632,19 @@ const AdminBlog = () => {
                 </TabsContent>
 
                 <TabsContent value="seo" className="space-y-6">
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-lg font-semibold">تحسين محركات البحث (SEO)</h3>
+                    <Button 
+                      onClick={generateSEO}
+                      disabled={generatingSEO || !title.trim()}
+                      variant="outline"
+                      size="sm"
+                    >
+                      <Wand2 className="w-4 h-4 mr-2" />
+                      {generatingSEO ? 'جاري التوليد...' : 'توليد بيانات SEO'}
+                    </Button>
+                  </div>
+
                   <div>
                     <Label htmlFor="meta-title">عنوان SEO</Label>
                     <Input
@@ -600,6 +674,17 @@ const AdminBlog = () => {
                     </div>
                   </div>
 
+                  <div>
+                    <Label htmlFor="article-url">رابط المقال (اختياري)</Label>
+                    <Input
+                      id="article-url"
+                      value={articleUrl}
+                      onChange={(e) => setArticleUrl(e.target.value)}
+                      placeholder="https://example.com/article"
+                      type="url"
+                    />
+                  </div>
+
                   <div className="bg-muted/50 p-4 rounded-lg">
                     <h4 className="font-semibold mb-2">معاينة في نتائج البحث:</h4>
                     <div className="space-y-1">
@@ -612,6 +697,20 @@ const AdminBlog = () => {
 
                 <TabsContent value="categories">
                   <AdminCategories />
+                </TabsContent>
+
+                <TabsContent value="manage" className="space-y-6">
+                  <BlogImportExport onImportComplete={loadBlogs} />
+                  <BlogBulkActions 
+                    blogs={blogs}
+                    selectedBlogs={selectedBlogs}
+                    onSelectionChange={setSelectedBlogs}
+                    onBlogsUpdate={loadBlogs}
+                    currentPage={currentPage}
+                    blogsPerPage={blogsPerPage}
+                    onPageChange={setCurrentPage}
+                    onBlogsPerPageChange={setBlogsPerPage}
+                  />
                 </TabsContent>
 
                 <div className="flex gap-2 mt-6">
