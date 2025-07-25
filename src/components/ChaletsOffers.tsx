@@ -344,7 +344,7 @@ const ChaletsOffers = () => {
                     <div className="text-right">
                       <h3 className="text-xl font-bold font-arabic text-primary mb-2">{offer.name}</h3>
                       
-                      <div className="flex flex-wrap gap-2 mb-4 justify-end">
+                      <div className="flex flex-wrap gap-2 mb-4 justify-start">"
                         {offer.floors && (
                           <Badge variant="secondary" className="font-arabic text-xs">
                             <Layers className="h-3 w-3 mr-1" />
