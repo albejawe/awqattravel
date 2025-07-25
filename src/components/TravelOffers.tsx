@@ -476,9 +476,7 @@ ${priceDetails.child ? `- سعر الطفل: ${priceDetails.child} د.ك` : ""}`
                           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                         />
                       ) : (
-                        <div className="w-full h-full bg-gradient-gold flex items-center justify-center">
-                          <span className="text-white text-4xl">🌍</span>
-                        </div>
+                        <div className="w-full h-full bg-gradient-gold"></div>
                       )}
                       <div className="absolute inset-0 bg-gradient-to-b from-primary/40 via-primary/60 to-black/80"></div>
                       <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
