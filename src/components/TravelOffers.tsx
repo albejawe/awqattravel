@@ -391,7 +391,8 @@ ${priceDetails.child ? `- سعر الطفل: ${priceDetails.child} د.ك` : ""}`
                   </Card>;
           })}
               
-              {/* Chalets Card */}
+              {/* Chalets Card - مخفي مؤقتاً */}
+              {false && (
               <Card className="card-gold cursor-pointer group overflow-hidden relative" onClick={() => window.location.href = '/chalets'}>
                 <div className="relative h-48 overflow-hidden">
                   <div className="w-full h-full bg-gradient-to-br from-blue-500 via-teal-500 to-green-500"></div>
@@ -406,6 +407,7 @@ ${priceDetails.child ? `- سعر الطفل: ${priceDetails.child} د.ك` : ""}`
                   </div>
                 </div>
               </Card>
+              )}
             </div>
           </div>}
 
