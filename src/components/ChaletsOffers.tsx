@@ -247,23 +247,13 @@ const ChaletsOffers = () => {
   }
 
   return (
-    <div className="relative min-h-screen">
-      {/* Hero Background */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url(${resortHeroBg})`,
-        }}
-      >
-        <div className="absolute inset-0 bg-black/40" />
-      </div>
-      
-      <div className="relative z-10 container mx-auto px-4 py-12" dir={direction}>
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-12" dir={direction}>
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 font-arabic text-white">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 font-arabic text-foreground">
             الشاليهات والمنتجعات
           </h1>
-          <p className="text-xl text-white/90 font-arabic max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground font-arabic max-w-2xl mx-auto">
             استمتع بإقامة فاخرة في أجمل المواقع السياحية
           </p>
         </div>
