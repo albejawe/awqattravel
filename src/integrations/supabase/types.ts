@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       blogs: {
         Row: {
+          article_url: string | null
           author_id: string
           category_id: string | null
           content: string
@@ -34,6 +35,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          article_url?: string | null
           author_id: string
           category_id?: string | null
           content: string
@@ -52,6 +54,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          article_url?: string | null
           author_id?: string
           category_id?: string | null
           content?: string
@@ -81,6 +84,7 @@ export type Database = {
       }
       categories: {
         Row: {
+          category_url: string | null
           color: string | null
           created_at: string
           description: string | null
@@ -90,6 +94,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          category_url?: string | null
           color?: string | null
           created_at?: string
           description?: string | null
@@ -99,6 +104,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          category_url?: string | null
           color?: string | null
           created_at?: string
           description?: string | null
@@ -157,8 +163,19 @@ export type Database = {
         Args: { content_text: string }
         Returns: number
       }
+      generate_seo_meta: {
+        Args: { title_text: string; content_text: string }
+        Returns: {
+          meta_title: string
+          meta_description: string
+        }[]
+      }
       generate_slug: {
         Args: { title: string }
+        Returns: string
+      }
+      generate_slug_enhanced: {
+        Args: { input_text: string }
         Returns: string
       }
       has_role: {
