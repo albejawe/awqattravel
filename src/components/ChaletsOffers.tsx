@@ -351,18 +351,18 @@ const ChaletsOffers = () => {
                             عدد الأدوار ({offer.floors})
                           </Badge>
                         )}
-                        {offer.masterRooms && (
-                          <Badge variant="secondary" className="font-arabic text-xs">
-                            <Home className="h-3 w-3 mr-1" />
-                            غرف ماستر ({offer.masterRooms})
-                          </Badge>
-                        )}
-                        {offer.regularRooms && (
-                          <Badge variant="secondary" className="font-arabic text-xs">
-                            <Home className="h-3 w-3 mr-1" />
-                            غرف عادية ({offer.regularRooms})
-                          </Badge>
-                        )}
+                         {offer.masterRooms && (
+                           <Badge variant="secondary" className="font-arabic text-xs">
+                             <Home className="h-3 w-3 mr-1" />
+                             عدد الغرف الماستر ({offer.masterRooms})
+                           </Badge>
+                         )}
+                         {offer.regularRooms && (
+                           <Badge variant="secondary" className="font-arabic text-xs">
+                             <Home className="h-3 w-3 mr-1" />
+                             عدد الغرف العادية ({offer.regularRooms})
+                           </Badge>
+                         )}
                         {offer.bathrooms && (
                           <Badge variant="secondary" className="font-arabic text-xs">
                             <Bath className="h-3 w-3 mr-1" />
