@@ -511,15 +511,13 @@ ${priceDetails.child ? `- سعر الطفل: ${priceDetails.child} د.ك` : ""}`
                 onClick={() => window.location.href = '/chalets'}
               >
                 <div className="relative h-48 overflow-hidden">
-                  <div className="w-full h-full bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center">
-                    <span className="text-white text-4xl">🏖️</span>
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-b from-primary/40 via-primary/60 to-black/80"></div>
+                  <div className="w-full h-full bg-gradient-to-br from-blue-500 via-teal-500 to-green-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
                   <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                    <h3 className="text-2xl font-bold font-arabic mb-2 group-hover:text-primary transition-colors">
+                    <h3 className="text-2xl font-bold font-arabic mb-2 group-hover:text-gold transition-colors drop-shadow-lg">
                       الشاليهات والمنتجعات
                     </h3>
-                    <p className="text-white/90 font-arabic text-sm">
+                    <p className="text-white font-arabic text-sm drop-shadow-md">
                       مجموعة متنوعة من الشاليهات
                     </p>
                   </div>
