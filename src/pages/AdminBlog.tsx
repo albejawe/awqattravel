@@ -81,8 +81,8 @@ const AdminBlog = () => {
 
     if (error) {
       toast({
-        title: "Error",
-        description: "Failed to load blogs",
+        title: "خطأ",
+        description: "فشل في تحميل المقالات",
         variant: "destructive",
       });
       return;
@@ -94,8 +94,8 @@ const AdminBlog = () => {
   const generateContent = async () => {
     if (!title.trim()) {
       toast({
-        title: "Error",
-        description: "Please enter a title first",
+        title: "خطأ",
+        description: "يرجى إدخال العنوان أولاً",
         variant: "destructive",
       });
       return;
@@ -105,7 +105,7 @@ const AdminBlog = () => {
     try {
       const { data, error } = await supabase.functions.invoke('generate-blog-content', {
         body: { 
-          prompt: `Write a comprehensive travel blog post about: ${title}. Include practical tips, personal insights, and make it engaging for travelers.`,
+          prompt: `اكتب مقالة سفر شاملة باللغة العربية عن: ${title}. يجب أن تتضمن نصائح عملية ورؤى شخصية وتكون جذابة للمسافرين.`,
           type: 'blog'
         }
       });
@@ -119,13 +119,13 @@ const AdminBlog = () => {
       setExcerpt(firstParagraph.substring(0, 200) + (firstParagraph.length > 200 ? '...' : ''));
 
       toast({
-        title: "Content Generated",
-        description: "AI-generated content has been added to your blog post",
+        title: "تم توليد المحتوى",
+        description: "تم إضافة المحتوى المولد بالذكاء الاصطناعي إلى مقالتك",
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to generate content",
+        title: "خطأ",
+        description: "فشل في توليد المحتوى",
         variant: "destructive",
       });
     } finally {
@@ -156,13 +156,13 @@ const AdminBlog = () => {
       setFeaturedImage(data.publicUrl);
 
       toast({
-        title: "Image Uploaded",
-        description: "Featured image has been uploaded successfully",
+        title: "تم رفع الصورة",
+        description: "تم رفع الصورة المميزة بنجاح",
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to upload image",
+        title: "خطأ",
+        description: "فشل في رفع الصورة",
         variant: "destructive",
       });
     } finally {
@@ -173,8 +173,8 @@ const AdminBlog = () => {
   const saveBlog = async () => {
     if (!title.trim() || !content.trim()) {
       toast({
-        title: "Error",
-        description: "Title and content are required",
+        title: "خطأ",
+        description: "العنوان والمحتوى مطلوبان",
         variant: "destructive",
       });
       return;
@@ -214,16 +214,16 @@ const AdminBlog = () => {
       if (result.error) throw result.error;
 
       toast({
-        title: "Success",
-        description: `Blog ${editingBlog ? 'updated' : 'created'} successfully`,
+        title: "نجح الحفظ",
+        description: `تم ${editingBlog ? 'تحديث' : 'إنشاء'} المقال بنجاح`,
       });
 
       resetForm();
       await loadBlogs();
     } catch (error) {
       toast({
-        title: "Error",
-        description: `Failed to ${editingBlog ? 'update' : 'create'} blog`,
+        title: "خطأ",
+        description: `فشل في ${editingBlog ? 'تحديث' : 'إنشاء'} المقال`,
         variant: "destructive",
       });
     }
@@ -240,7 +240,7 @@ const AdminBlog = () => {
   };
 
   const deleteBlog = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this blog?')) return;
+    if (!confirm('هل أنت متأكد من حذف هذا المقال؟')) return;
 
     const { error } = await supabase
       .from('blogs')
@@ -249,16 +249,16 @@ const AdminBlog = () => {
 
     if (error) {
       toast({
-        title: "Error",
-        description: "Failed to delete blog",
+        title: "خطأ",
+        description: "فشل في حذف المقال",
         variant: "destructive",
       });
       return;
     }
 
     toast({
-      title: "Success",
-      description: "Blog deleted successfully",
+      title: "تم الحذف",
+      description: "تم حذف المقال بنجاح",
     });
     await loadBlogs();
   };
@@ -276,7 +276,7 @@ const AdminBlog = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div>Loading...</div>
+        <div>جاري التحميل...</div>
       </div>
     );
   }
@@ -292,13 +292,13 @@ const AdminBlog = () => {
               size="sm"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Dashboard
+              العودة للوحة الإدارة
             </Button>
-            <h1 className="text-2xl font-bold">Blog Management</h1>
+            <h1 className="text-2xl font-bold">إدارة المدونة</h1>
           </div>
           {!isCreating && (
             <Button onClick={() => setIsCreating(true)}>
-              Create New Blog
+              إنشاء مقال جديد
             </Button>
           )}
         </div>
@@ -309,18 +309,18 @@ const AdminBlog = () => {
           <Card>
             <CardHeader>
               <CardTitle>
-                {editingBlog ? 'Edit Blog Post' : 'Create New Blog Post'}
+                {editingBlog ? 'تحرير المقال' : 'إنشاء مقال جديد'}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
-                <Label htmlFor="title">Title</Label>
+                <Label htmlFor="title">العنوان</Label>
                 <div className="flex gap-2">
                   <Input
                     id="title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    placeholder="Enter blog title..."
+                    placeholder="أدخل عنوان المقال..."
                   />
                   <Button 
                     onClick={generateContent}
@@ -328,34 +328,34 @@ const AdminBlog = () => {
                     variant="outline"
                   >
                     <Wand2 className="w-4 h-4 mr-2" />
-                    {generating ? 'Generating...' : 'Generate with AI'}
+                    {generating ? 'جاري التوليد...' : 'توليد بالذكاء الاصطناعي'}
                   </Button>
                 </div>
               </div>
 
               <div>
-                <Label htmlFor="excerpt">Excerpt</Label>
+                <Label htmlFor="excerpt">المقدمة</Label>
                 <Textarea
                   id="excerpt"
                   value={excerpt}
                   onChange={(e) => setExcerpt(e.target.value)}
-                  placeholder="Brief description of the blog post..."
+                  placeholder="وصف مختصر للمقال..."
                   rows={2}
                 />
               </div>
 
               <div>
-                <Label>Featured Image</Label>
+                <Label>الصورة المميزة</Label>
                 <div className="space-y-2">
                   <div className="flex gap-2">
                     <Input
                       value={featuredImage}
                       onChange={(e) => setFeaturedImage(e.target.value)}
-                      placeholder="Image URL or upload below..."
+                      placeholder="رابط الصورة أو ارفع أدناه..."
                     />
                     <Button variant="outline" size="sm">
                       <Link className="w-4 h-4 mr-2" />
-                      URL
+                      رابط
                     </Button>
                   </div>
                   <div className="flex items-center gap-2">
@@ -368,13 +368,13 @@ const AdminBlog = () => {
                     />
                     <Button variant="outline" size="sm" disabled={uploading}>
                       <Upload className="w-4 h-4 mr-2" />
-                      {uploading ? 'Uploading...' : 'Upload'}
+                      {uploading ? 'جاري الرفع...' : 'رفع'}
                     </Button>
                   </div>
                   {featuredImage && (
                     <img 
                       src={featuredImage} 
-                      alt="Featured" 
+                      alt="صورة مميزة" 
                       className="w-32 h-20 object-cover rounded border"
                     />
                   )}
@@ -382,25 +382,25 @@ const AdminBlog = () => {
               </div>
 
               <div>
-                <Label htmlFor="content">Content</Label>
+                <Label htmlFor="content">المحتوى</Label>
                 <Textarea
                   id="content"
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
-                  placeholder="Write your blog content here..."
+                  placeholder="اكتب محتوى مقالك هنا..."
                   rows={15}
                 />
               </div>
 
               <div>
-                <Label htmlFor="status">Status</Label>
+                <Label htmlFor="status">الحالة</Label>
                 <Select value={status} onValueChange={(value: 'draft' | 'published') => setStatus(value)}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="draft">Draft</SelectItem>
-                    <SelectItem value="published">Published</SelectItem>
+                    <SelectItem value="draft">مسودة</SelectItem>
+                    <SelectItem value="published">منشور</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -408,10 +408,10 @@ const AdminBlog = () => {
               <div className="flex gap-2">
                 <Button onClick={saveBlog}>
                   <Save className="w-4 h-4 mr-2" />
-                  {editingBlog ? 'Update Blog' : 'Save Blog'}
+                  {editingBlog ? 'تحديث المقال' : 'حفظ المقال'}
                 </Button>
                 <Button variant="outline" onClick={resetForm}>
-                  Cancel
+                  إلغاء
                 </Button>
               </div>
             </CardContent>
@@ -426,8 +426,8 @@ const AdminBlog = () => {
                       <h3 className="text-xl font-semibold mb-2">{blog.title}</h3>
                       <p className="text-muted-foreground mb-4">{blog.excerpt}</p>
                       <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                        <span>Status: {blog.status}</span>
-                        <span>Updated: {new Date(blog.updated_at).toLocaleDateString()}</span>
+                        <span>الحالة: {blog.status === 'published' ? 'منشور' : 'مسودة'}</span>
+                        <span>آخر تحديث: {new Date(blog.updated_at).toLocaleDateString('ar-SA')}</span>
                       </div>
                     </div>
                     {blog.featured_image && (
@@ -440,19 +440,23 @@ const AdminBlog = () => {
                   </div>
                   <div className="flex gap-2 mt-4">
                     <Button onClick={() => editBlog(blog)} variant="outline" size="sm">
-                      Edit
+                      تحرير
                     </Button>
                     <Button 
                       onClick={() => deleteBlog(blog.id)} 
                       variant="outline" 
                       size="sm"
                     >
-                      Delete
+                      حذف
                     </Button>
                     {blog.status === 'published' && (
-                      <Button variant="outline" size="sm">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => window.open(`/blog/${blog.slug}`, '_blank')}
+                      >
                         <Eye className="w-4 h-4 mr-2" />
-                        View
+                        عرض
                       </Button>
                     )}
                   </div>
@@ -462,7 +466,7 @@ const AdminBlog = () => {
             {blogs.length === 0 && (
               <Card>
                 <CardContent className="text-center py-12">
-                  <p className="text-muted-foreground">No blogs created yet. Create your first blog post!</p>
+                  <p className="text-muted-foreground">لم يتم إنشاء مقالات بعد. أنشئ مقالك الأول!</p>
                 </CardContent>
               </Card>
             )}

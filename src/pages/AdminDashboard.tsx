@@ -48,7 +48,7 @@ const AdminDashboard = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div>Loading...</div>
+        <div>جاري التحميل...</div>
       </div>
     );
   }
@@ -57,14 +57,14 @@ const AdminDashboard = () => {
     <div className="min-h-screen bg-background">
       <header className="bg-card border-b p-4">
         <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Admin Dashboard</h1>
+          <h1 className="text-2xl font-bold">لوحة الإدارة</h1>
           <div className="flex items-center gap-4">
             <span className="text-sm text-muted-foreground">
-              Welcome, {user?.email}
+              مرحباً، {user?.email}
             </span>
             <Button onClick={handleLogout} variant="outline" size="sm">
               <LogOut className="w-4 h-4 mr-2" />
-              Logout
+              تسجيل خروج
             </Button>
           </div>
         </div>
@@ -76,12 +76,12 @@ const AdminDashboard = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="w-5 h-5" />
-                Blog Management
+                إدارة المدونة
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">
-                Create, edit, and manage blog posts with AI-powered content generation
+                إنشاء وتحرير وإدارة مقالات المدونة مع توليد المحتوى بالذكاء الاصطناعي
               </p>
             </CardContent>
           </Card>

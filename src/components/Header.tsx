@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const { language, toggleLanguage } = useLanguage();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,18 +28,33 @@ const Header = () => {
     >
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          {/* Language Toggle */}
-          <Button
-            onClick={toggleLanguage}
-            variant="outline"
-            size="sm"
-            className="bg-white/10 border-primary-dark text-primary-dark hover:bg-primary-dark hover:text-white font-bold"
-          >
-            {language === 'ar' ? 'en' : 'ع'}
-          </Button>
+          {/* Navigation */}
+          <div className="flex items-center gap-4">
+            <Button
+              onClick={() => navigate('/')}
+              variant={location.pathname === '/' ? 'default' : 'ghost'}
+              size="sm"
+            >
+              الرئيسية
+            </Button>
+            <Button
+              onClick={() => navigate('/chalets')}
+              variant={location.pathname === '/chalets' ? 'default' : 'ghost'}
+              size="sm"
+            >
+              الشاليهات
+            </Button>
+            <Button
+              onClick={() => navigate('/blog')}
+              variant={location.pathname.startsWith('/blog') ? 'default' : 'ghost'}
+              size="sm"
+            >
+              المدونة
+            </Button>
+          </div>
           
           {/* Logo */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
             <img 
               src="/lovable-uploads/1ed71778-e792-40a8-8405-33112955d820.png" 
               alt="شركة أوقات للسياحة والسفر" 
@@ -47,8 +65,15 @@ const Header = () => {
             </span>
           </div>
           
-          {/* Spacer */}
-          <div className="w-16"></div>
+          {/* Language Toggle */}
+          <Button
+            onClick={toggleLanguage}
+            variant="outline"
+            size="sm"
+            className="bg-white/10 border-primary-dark text-primary-dark hover:bg-primary-dark hover:text-white font-bold"
+          >
+            {language === 'ar' ? 'en' : 'ع'}
+          </Button>
         </div>
       </div>
     </header>

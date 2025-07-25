@@ -25,8 +25,8 @@ serve(async (req) => {
     const API_KEY = "AIzaSyC89IHDdArMIeNIrM947zLb_hfZ39g1iCg";
     
     const systemPrompt = type === 'blog' 
-      ? 'You are a professional travel blog writer. Create engaging, informative, and SEO-friendly travel blog content. Write in a conversational tone that inspires wanderlust while providing practical information.'
-      : 'You are a helpful content writer. Create engaging and informative content based on the user\'s request.';
+      ? 'أنت كاتب مدونة سفر محترف باللغة العربية. اكتب محتوى مدونة سفر جذاب ومفيد ومناسب لمحركات البحث. اكتب بأسلوب محادثة يلهم الشغف بالسفر مع تقديم معلومات عملية مفيدة. يجب أن يكون المحتوى باللغة العربية فقط.'
+      : 'أنت كاتب محتوى مفيد. اكتب محتوى جذاب ومفيد باللغة العربية بناءً على طلب المستخدم. يجب أن يكون المحتوى باللغة العربية فقط.';
 
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`, {
       method: 'POST',

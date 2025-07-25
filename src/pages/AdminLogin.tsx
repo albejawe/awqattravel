@@ -24,7 +24,7 @@ const AdminLogin = () => {
 
       if (error) {
         toast({
-          title: "Login Failed",
+          title: "فشل تسجيل الدخول",
           description: error.message,
           variant: "destructive",
         });
@@ -42,8 +42,8 @@ const AdminLogin = () => {
 
         if (roleError || !roleData) {
           toast({
-            title: "Access Denied",
-            description: "You don't have admin privileges",
+            title: "تم رفض الوصول",
+            description: "ليس لديك صلاحيات إدارية",
             variant: "destructive",
           });
           await supabase.auth.signOut();
@@ -51,15 +51,15 @@ const AdminLogin = () => {
         }
 
         toast({
-          title: "Login Successful",
-          description: "Welcome to the admin panel",
+          title: "تم تسجيل الدخول بنجاح",
+          description: "مرحباً بك في لوحة الإدارة",
         });
         navigate("/admin");
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "An unexpected error occurred",
+        title: "خطأ",
+        description: "حدث خطأ غير متوقع",
         variant: "destructive",
       });
     } finally {
@@ -71,23 +71,24 @@ const AdminLogin = () => {
     <div className="min-h-screen bg-gradient-to-br from-primary via-primary-variant to-secondary flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-center text-2xl">Admin Login</CardTitle>
+          <CardTitle className="text-center text-2xl">تسجيل دخول الإدارة</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <Input
                 type="email"
-                placeholder="Email"
+                placeholder="البريد الإلكتروني"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                dir="ltr"
               />
             </div>
             <div>
               <Input
                 type="password"
-                placeholder="Password"
+                placeholder="كلمة المرور"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -98,7 +99,7 @@ const AdminLogin = () => {
               className="w-full" 
               disabled={loading}
             >
-              {loading ? "Signing in..." : "Sign In"}
+              {loading ? "جاري تسجيل الدخول..." : "تسجيل الدخول"}
             </Button>
           </form>
         </CardContent>
