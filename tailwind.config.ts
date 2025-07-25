@@ -110,8 +110,101 @@ export default {
 				'scale-in': 'scaleIn 0.3s ease-out',
 				'bounce-in': 'bounceIn 0.5s ease-out',
 				'slide-in-from-top': 'slideInFromTop 0.5s ease-out'
+			},
+			typography: {
+				DEFAULT: {
+					css: {
+						maxWidth: 'none',
+						color: 'hsl(var(--foreground))',
+						lineHeight: '1.7',
+						fontSize: '16px',
+						h1: {
+							color: 'hsl(var(--foreground))',
+							fontWeight: '700',
+							fontSize: '2.25rem',
+							marginTop: '2rem',
+							marginBottom: '1rem',
+						},
+						h2: {
+							color: 'hsl(var(--foreground))',
+							fontWeight: '600',
+							fontSize: '1.875rem',
+							marginTop: '1.75rem',
+							marginBottom: '0.875rem',
+						},
+						h3: {
+							color: 'hsl(var(--foreground))',
+							fontWeight: '600',
+							fontSize: '1.5rem',
+							marginTop: '1.5rem',
+							marginBottom: '0.75rem',
+						},
+						h4: {
+							color: 'hsl(var(--foreground))',
+							fontWeight: '600',
+							fontSize: '1.25rem',
+							marginTop: '1.25rem',
+							marginBottom: '0.5rem',
+						},
+						p: {
+							marginTop: '1rem',
+							marginBottom: '1rem',
+						},
+						a: {
+							color: 'hsl(var(--primary))',
+							textDecoration: 'underline',
+							fontWeight: '500',
+						},
+						strong: {
+							color: 'hsl(var(--foreground))',
+							fontWeight: '600',
+						},
+						ul: {
+							marginTop: '1rem',
+							marginBottom: '1rem',
+						},
+						ol: {
+							marginTop: '1rem',
+							marginBottom: '1rem',
+						},
+						li: {
+							marginTop: '0.5rem',
+							marginBottom: '0.5rem',
+						},
+						blockquote: {
+							fontStyle: 'italic',
+							borderLeftWidth: '4px',
+							borderLeftColor: 'hsl(var(--border))',
+							paddingLeft: '1rem',
+							marginTop: '1.5rem',
+							marginBottom: '1.5rem',
+							color: 'hsl(var(--muted-foreground))',
+						},
+						code: {
+							color: 'hsl(var(--primary))',
+							backgroundColor: 'hsl(var(--muted))',
+							paddingLeft: '0.25rem',
+							paddingRight: '0.25rem',
+							paddingTop: '0.125rem',
+							paddingBottom: '0.125rem',
+							borderRadius: '0.25rem',
+							fontSize: '0.875rem',
+						},
+						'code::before': {
+							content: '""',
+						},
+						'code::after': {
+							content: '""',
+						},
+						img: {
+							borderRadius: '0.5rem',
+							marginTop: '1.5rem',
+							marginBottom: '1.5rem',
+						},
+					},
+				},
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;

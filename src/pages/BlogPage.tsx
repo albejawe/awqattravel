@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, ArrowRight } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { CalendarDays, ArrowRight, Clock, Tag } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -18,6 +19,9 @@ interface Blog {
   created_at: string;
   updated_at: string;
   published_at?: string;
+  reading_time?: number;
+  category_id?: string;
+  tags?: string[];
 }
 
 const BlogPage = () => {
@@ -32,7 +36,14 @@ const BlogPage = () => {
   const loadBlogs = async () => {
     const { data, error } = await supabase
       .from('blogs')
-      .select('*')
+      .select(`
+        *,
+        categories:category_id (
+          id,
+          name,
+          color
+        )
+      `)
       .eq('status', 'published')
       .order('published_at', { ascending: false });
 
@@ -94,12 +105,28 @@ const BlogPage = () => {
                   )}
                   <CardHeader>
                     <CardTitle className="text-xl line-clamp-2">{blog.title}</CardTitle>
-                    <div className="flex items-center text-sm text-muted-foreground">
-                      <CalendarDays className="w-4 h-4 mr-2" />
-                      {formatDate(blog.published_at || blog.created_at)}
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                      <div className="flex items-center">
+                        <CalendarDays className="w-4 h-4 mr-2" />
+                        {formatDate(blog.published_at || blog.created_at)}
+                      </div>
+                      {blog.reading_time && (
+                        <div className="flex items-center">
+                          <Clock className="w-4 h-4 mr-2" />
+                          {blog.reading_time} دقائق
+                        </div>
+                      )}
                     </div>
                   </CardHeader>
                   <CardContent>
+                    <div className="flex items-center gap-2 mb-3">
+                      {(blog as any).categories && (
+                        <Badge style={{ backgroundColor: (blog as any).categories.color + '20', color: (blog as any).categories.color }}>
+                          <Tag className="w-3 h-3 mr-1" />
+                          {(blog as any).categories.name}
+                        </Badge>
+                      )}
+                    </div>
                     <p className="text-muted-foreground line-clamp-3 mb-4">
                       {blog.excerpt}
                     </p>

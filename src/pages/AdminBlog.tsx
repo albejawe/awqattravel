@@ -7,9 +7,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
-import { ArrowLeft, Wand2, Upload, Link, Save, Eye } from "lucide-react";
+import { ArrowLeft, Wand2, Upload, Link, Save, Eye, Tag, Palette, Clock, Sparkles } from "lucide-react";
 import { User } from "@supabase/supabase-js";
+import RichTextEditor from "@/components/RichTextEditor";
+import AdminCategories from "@/components/AdminCategories";
 
 interface Blog {
   id: string;
@@ -23,16 +27,31 @@ interface Blog {
   created_at: string;
   updated_at: string;
   published_at?: string;
+  category_id?: string;
+  tags?: string[];
+  meta_title?: string;
+  meta_description?: string;
+  reading_time?: number;
+}
+
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  description: string | null;
+  color: string;
 }
 
 const AdminBlog = () => {
   const [user, setUser] = useState<User | null>(null);
   const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [isCreating, setIsCreating] = useState(false);
   const [editingBlog, setEditingBlog] = useState<Blog | null>(null);
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [generatingTitle, setGeneratingTitle] = useState(false);
   
   // Form state
   const [title, setTitle] = useState("");
@@ -40,6 +59,10 @@ const AdminBlog = () => {
   const [excerpt, setExcerpt] = useState("");
   const [featuredImage, setFeaturedImage] = useState("");
   const [status, setStatus] = useState<'draft' | 'published'>('draft');
+  const [categoryId, setCategoryId] = useState<string>("");
+  const [tags, setTags] = useState<string>("");
+  const [metaTitle, setMetaTitle] = useState("");
+  const [metaDescription, setMetaDescription] = useState("");
   
   const navigate = useNavigate();
 
@@ -66,7 +89,7 @@ const AdminBlog = () => {
       }
 
       setUser(user);
-      await loadBlogs();
+      await Promise.all([loadBlogs(), loadCategories()]);
       setLoading(false);
     };
 
@@ -76,7 +99,14 @@ const AdminBlog = () => {
   const loadBlogs = async () => {
     const { data, error } = await supabase
       .from('blogs')
-      .select('*')
+      .select(`
+        *,
+        categories:category_id (
+          id,
+          name,
+          color
+        )
+      `)
       .order('updated_at', { ascending: false });
 
     if (error) {
@@ -89,6 +119,62 @@ const AdminBlog = () => {
     }
 
     setBlogs((data || []) as Blog[]);
+  };
+
+  const loadCategories = async () => {
+    const { data, error } = await supabase
+      .from('categories')
+      .select('*')
+      .order('name', { ascending: true });
+
+    if (error) {
+      toast({
+        title: "خطأ",
+        description: "فشل في تحميل الفئات",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setCategories((data || []) as Category[]);
+  };
+
+  const generateTitle = async () => {
+    if (!excerpt.trim() && !content.trim()) {
+      toast({
+        title: "خطأ",
+        description: "يرجى إدخال موضوع المقال أو المحتوى أولاً",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setGeneratingTitle(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-blog-content', {
+        body: { 
+          prompt: `اقترح عنوان جذاب ومحسن لمحركات البحث لمقال سفر عن: ${excerpt || content.substring(0, 200)}. العنوان يجب أن يكون قصير ومؤثر وباللغة العربية.`,
+          type: 'title'
+        }
+      });
+
+      if (error) throw error;
+
+      setTitle(data.content.replace(/"/g, '').trim());
+      
+      toast({
+        title: "تم توليد العنوان",
+        description: "تم إنشاء عنوان محسن لمقالك",
+      });
+    } catch (error) {
+      toast({
+        title: "خطأ",
+        description: "فشل في توليد العنوان",
+        variant: "destructive",
+      });
+    } finally {
+      setGeneratingTitle(false);
+    }
   };
 
   const generateContent = async () => {
@@ -105,7 +191,7 @@ const AdminBlog = () => {
     try {
       const { data, error } = await supabase.functions.invoke('generate-blog-content', {
         body: { 
-          prompt: `اكتب مقالة سفر شاملة باللغة العربية عن: ${title}. يجب أن تتضمن نصائح عملية ورؤى شخصية وتكون جذابة للمسافرين.`,
+          prompt: `اكتب مقالة سفر شاملة ومفصلة باللغة العربية عن: ${title}. يجب أن تكون مقالة احترافية محسنة لمحركات البحث مع عناوين فرعية وقوائم ونصائح عملية.`,
           type: 'blog'
         }
       });
@@ -114,9 +200,18 @@ const AdminBlog = () => {
 
       setContent(data.content);
       
-      // Generate excerpt from first paragraph
-      const firstParagraph = data.content.split('\n\n')[0];
-      setExcerpt(firstParagraph.substring(0, 200) + (firstParagraph.length > 200 ? '...' : ''));
+      // Auto-generate excerpt from content
+      const textContent = data.content.replace(/<[^>]*>/g, '').trim();
+      const firstSentences = textContent.split('.').slice(0, 2).join('.') + '.';
+      setExcerpt(firstSentences.substring(0, 200) + (firstSentences.length > 200 ? '...' : ''));
+
+      // Auto-generate meta title and description
+      if (!metaTitle) {
+        setMetaTitle(title);
+      }
+      if (!metaDescription) {
+        setMetaDescription(firstSentences.substring(0, 160));
+      }
 
       toast({
         title: "تم توليد المحتوى",
@@ -188,14 +283,20 @@ const AdminBlog = () => {
           .trim();
       };
 
+      const tagsArray = tags.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0);
+      
       const blogData = {
         title,
         content,
-        excerpt: excerpt || content.substring(0, 200) + '...',
+        excerpt: excerpt || content.replace(/<[^>]*>/g, '').substring(0, 200) + '...',
         featured_image: featuredImage || null,
         status,
         author_id: user?.id,
         slug: editingBlog ? editingBlog.slug : generateSlug(title),
+        category_id: categoryId || null,
+        tags: tagsArray.length > 0 ? tagsArray : null,
+        meta_title: metaTitle || title,
+        meta_description: metaDescription || excerpt,
         ...(status === 'published' && { published_at: new Date().toISOString() })
       };
 
@@ -236,6 +337,10 @@ const AdminBlog = () => {
     setExcerpt(blog.excerpt || '');
     setFeaturedImage(blog.featured_image || '');
     setStatus(blog.status);
+    setCategoryId(blog.category_id || '');
+    setTags(blog.tags ? blog.tags.join(', ') : '');
+    setMetaTitle(blog.meta_title || '');
+    setMetaDescription(blog.meta_description || '');
     setIsCreating(true);
   };
 
@@ -269,6 +374,10 @@ const AdminBlog = () => {
     setExcerpt("");
     setFeaturedImage("");
     setStatus('draft');
+    setCategoryId("");
+    setTags("");
+    setMetaTitle("");
+    setMetaDescription("");
     setIsCreating(false);
     setEditingBlog(null);
   };
@@ -308,112 +417,213 @@ const AdminBlog = () => {
         {isCreating ? (
           <Card>
             <CardHeader>
-              <CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <Sparkles className="w-5 h-5" />
                 {editingBlog ? 'تحرير المقال' : 'إنشاء مقال جديد'}
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <Label htmlFor="title">العنوان</Label>
-                <div className="flex gap-2">
-                  <Input
-                    id="title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="أدخل عنوان المقال..."
-                  />
-                  <Button 
-                    onClick={generateContent}
-                    disabled={generating || !title.trim()}
-                    variant="outline"
-                  >
-                    <Wand2 className="w-4 h-4 mr-2" />
-                    {generating ? 'جاري التوليد...' : 'توليد بالذكاء الاصطناعي'}
+            <CardContent>
+              <Tabs defaultValue="content" className="w-full">
+                <TabsList className="grid w-full grid-cols-3">
+                  <TabsTrigger value="content">المحتوى</TabsTrigger>
+                  <TabsTrigger value="seo">SEO</TabsTrigger>
+                  <TabsTrigger value="categories">الفئات</TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="content" className="space-y-6">
+                  <div>
+                    <Label htmlFor="title">العنوان</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        id="title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        placeholder="أدخل عنوان المقال..."
+                      />
+                      <Button 
+                        onClick={generateTitle}
+                        disabled={generatingTitle}
+                        variant="outline"
+                        size="sm"
+                      >
+                        <Wand2 className="w-4 h-4 mr-2" />
+                        {generatingTitle ? 'جاري التوليد...' : 'توليد العنوان'}
+                      </Button>
+                      <Button 
+                        onClick={generateContent}
+                        disabled={generating || !title.trim()}
+                        variant="outline"
+                        size="sm"
+                      >
+                        <Sparkles className="w-4 h-4 mr-2" />
+                        {generating ? 'جاري التوليد...' : 'توليد المحتوى'}
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="category">الفئة</Label>
+                      <Select value={categoryId} onValueChange={setCategoryId}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="اختر فئة..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {categories.map((category) => (
+                            <SelectItem key={category.id} value={category.id}>
+                              <div className="flex items-center gap-2">
+                                <div
+                                  className="w-3 h-3 rounded-full"
+                                  style={{ backgroundColor: category.color }}
+                                />
+                                {category.name}
+                              </div>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div>
+                      <Label htmlFor="status">الحالة</Label>
+                      <Select value={status} onValueChange={(value: 'draft' | 'published') => setStatus(value)}>
+                        <SelectTrigger>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="draft">مسودة</SelectItem>
+                          <SelectItem value="published">منشور</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="excerpt">المقدمة</Label>
+                    <Textarea
+                      id="excerpt"
+                      value={excerpt}
+                      onChange={(e) => setExcerpt(e.target.value)}
+                      placeholder="وصف مختصر للمقال..."
+                      rows={3}
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="tags">الكلمات المفتاحية</Label>
+                    <Input
+                      id="tags"
+                      value={tags}
+                      onChange={(e) => setTags(e.target.value)}
+                      placeholder="سفر، سياحة، رحلات (مفصولة بفواصل)"
+                    />
+                    <div className="text-sm text-muted-foreground mt-1">
+                      فصل الكلمات المفتاحية بفواصل
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label>الصورة المميزة</Label>
+                    <div className="space-y-2">
+                      <div className="flex gap-2">
+                        <Input
+                          value={featuredImage}
+                          onChange={(e) => setFeaturedImage(e.target.value)}
+                          placeholder="رابط الصورة أو ارفع أدناه..."
+                        />
+                        <Button variant="outline" size="sm">
+                          <Link className="w-4 h-4 mr-2" />
+                          رابط
+                        </Button>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageUpload}
+                          disabled={uploading}
+                          className="flex-1"
+                        />
+                        <Button variant="outline" size="sm" disabled={uploading}>
+                          <Upload className="w-4 h-4 mr-2" />
+                          {uploading ? 'جاري الرفع...' : 'رفع'}
+                        </Button>
+                      </div>
+                      {featuredImage && (
+                        <img 
+                          src={featuredImage} 
+                          alt="صورة مميزة" 
+                          className="w-32 h-20 object-cover rounded border"
+                        />
+                      )}
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="content">المحتوى</Label>
+                    <RichTextEditor
+                      value={content}
+                      onChange={setContent}
+                      placeholder="اكتب محتوى مقالك هنا..."
+                      height="500px"
+                    />
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="seo" className="space-y-6">
+                  <div>
+                    <Label htmlFor="meta-title">عنوان SEO</Label>
+                    <Input
+                      id="meta-title"
+                      value={metaTitle}
+                      onChange={(e) => setMetaTitle(e.target.value)}
+                      placeholder="عنوان محسن لمحركات البحث..."
+                      maxLength={60}
+                    />
+                    <div className="text-sm text-muted-foreground mt-1">
+                      {metaTitle.length}/60 حرف
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="meta-description">وصف SEO</Label>
+                    <Textarea
+                      id="meta-description"
+                      value={metaDescription}
+                      onChange={(e) => setMetaDescription(e.target.value)}
+                      placeholder="وصف محسن لمحركات البحث..."
+                      rows={3}
+                      maxLength={160}
+                    />
+                    <div className="text-sm text-muted-foreground mt-1">
+                      {metaDescription.length}/160 حرف
+                    </div>
+                  </div>
+
+                  <div className="bg-muted/50 p-4 rounded-lg">
+                    <h4 className="font-semibold mb-2">معاينة في نتائج البحث:</h4>
+                    <div className="space-y-1">
+                      <div className="text-blue-600 text-lg">{metaTitle || title || "عنوان المقال"}</div>
+                      <div className="text-green-600 text-sm">yoursite.com/blog/{title ? title.toLowerCase().replace(/\s+/g, '-') : 'article-slug'}</div>
+                      <div className="text-gray-600 text-sm">{metaDescription || excerpt || "وصف المقال"}</div>
+                    </div>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="categories">
+                  <AdminCategories />
+                </TabsContent>
+
+                <div className="flex gap-2 mt-6">
+                  <Button onClick={saveBlog}>
+                    <Save className="w-4 h-4 mr-2" />
+                    {editingBlog ? 'تحديث المقال' : 'حفظ المقال'}
+                  </Button>
+                  <Button variant="outline" onClick={resetForm}>
+                    إلغاء
                   </Button>
                 </div>
-              </div>
-
-              <div>
-                <Label htmlFor="excerpt">المقدمة</Label>
-                <Textarea
-                  id="excerpt"
-                  value={excerpt}
-                  onChange={(e) => setExcerpt(e.target.value)}
-                  placeholder="وصف مختصر للمقال..."
-                  rows={2}
-                />
-              </div>
-
-              <div>
-                <Label>الصورة المميزة</Label>
-                <div className="space-y-2">
-                  <div className="flex gap-2">
-                    <Input
-                      value={featuredImage}
-                      onChange={(e) => setFeaturedImage(e.target.value)}
-                      placeholder="رابط الصورة أو ارفع أدناه..."
-                    />
-                    <Button variant="outline" size="sm">
-                      <Link className="w-4 h-4 mr-2" />
-                      رابط
-                    </Button>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageUpload}
-                      disabled={uploading}
-                      className="flex-1"
-                    />
-                    <Button variant="outline" size="sm" disabled={uploading}>
-                      <Upload className="w-4 h-4 mr-2" />
-                      {uploading ? 'جاري الرفع...' : 'رفع'}
-                    </Button>
-                  </div>
-                  {featuredImage && (
-                    <img 
-                      src={featuredImage} 
-                      alt="صورة مميزة" 
-                      className="w-32 h-20 object-cover rounded border"
-                    />
-                  )}
-                </div>
-              </div>
-
-              <div>
-                <Label htmlFor="content">المحتوى</Label>
-                <Textarea
-                  id="content"
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
-                  placeholder="اكتب محتوى مقالك هنا..."
-                  rows={15}
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="status">الحالة</Label>
-                <Select value={status} onValueChange={(value: 'draft' | 'published') => setStatus(value)}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="draft">مسودة</SelectItem>
-                    <SelectItem value="published">منشور</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="flex gap-2">
-                <Button onClick={saveBlog}>
-                  <Save className="w-4 h-4 mr-2" />
-                  {editingBlog ? 'تحديث المقال' : 'حفظ المقال'}
-                </Button>
-                <Button variant="outline" onClick={resetForm}>
-                  إلغاء
-                </Button>
-              </div>
+              </Tabs>
             </CardContent>
           </Card>
         ) : (
@@ -423,8 +633,29 @@ const AdminBlog = () => {
                 <CardContent className="p-6">
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
-                      <h3 className="text-xl font-semibold mb-2">{blog.title}</h3>
-                      <p className="text-muted-foreground mb-4">{blog.excerpt}</p>
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="text-xl font-semibold">{blog.title}</h3>
+                        {blog.reading_time && (
+                          <Badge variant="secondary" className="flex items-center gap-1">
+                            <Clock className="w-3 h-3" />
+                            {blog.reading_time} دقائق
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-muted-foreground mb-3">{blog.excerpt}</p>
+                      <div className="flex items-center gap-2 mb-2">
+                        {(blog as any).categories && (
+                          <Badge style={{ backgroundColor: (blog as any).categories.color + '20', color: (blog as any).categories.color }}>
+                            <Tag className="w-3 h-3 mr-1" />
+                            {(blog as any).categories.name}
+                          </Badge>
+                        )}
+                        {blog.tags && blog.tags.map((tag, index) => (
+                          <Badge key={index} variant="outline" className="text-xs">
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
                       <div className="flex items-center gap-4 text-sm text-muted-foreground">
                         <span>الحالة: {blog.status === 'published' ? 'منشور' : 'مسودة'}</span>
                         <span>آخر تحديث: {new Date(blog.updated_at).toLocaleDateString('ar-SA')}</span>
