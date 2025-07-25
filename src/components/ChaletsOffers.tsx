@@ -9,6 +9,7 @@ import Notification from "@/components/Notification";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { ArrowLeft, ArrowRight, Share2, Download, Play, Star, MapPin, Calendar, Users, Bath, Home, Layers } from "lucide-react";
 import html2canvas from 'html2canvas';
+import resortHeroBg from '@/assets/resort-hero-bg.jpg';
 
 interface ChaletOffer {
   category: string;
@@ -246,15 +247,26 @@ const ChaletsOffers = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-12" dir={direction}>
-      <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 font-arabic">
-          <span className="text-gold-gradient">الشاليهات والمنتجعات</span>
-        </h1>
-        <p className="text-xl text-muted-foreground font-arabic max-w-2xl mx-auto">
-          اختر من مجموعة متنوعة من الشاليهات والمنتجعات المميزة
-        </p>
+    <div className="relative min-h-screen">
+      {/* Hero Background */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url(${resortHeroBg})`,
+        }}
+      >
+        <div className="absolute inset-0 bg-black/40" />
       </div>
+      
+      <div className="relative z-10 container mx-auto px-4 py-12" dir={direction}>
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 font-arabic text-white">
+            الشاليهات والمنتجعات
+          </h1>
+          <p className="text-xl text-white/90 font-arabic max-w-2xl mx-auto">
+            استمتع بإقامة فاخرة في أجمل المواقع السياحية
+          </p>
+        </div>
 
       {!selectedCategory ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -281,7 +293,7 @@ const ChaletsOffers = () => {
                       <div className="absolute bottom-4 left-4 text-white">
                         <h3 className="text-2xl font-bold font-arabic">{category}</h3>
                         <p className="text-sm opacity-90 font-arabic">
-                          {categoryOffers.length} {categoryOffers.length === 1 ? 'منتجع' : 'منتجعات'}
+                          {categoryOffers.length} {categoryOffers.length === 1 ? 'وحدة' : 'وحدات'}
                         </p>
                       </div>
                     </div>
@@ -294,8 +306,8 @@ const ChaletsOffers = () => {
       ) : (
         <div>
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold font-arabic text-primary">
-              {selectedCategory} ({filteredOffers.length} منتجع)
+            <h2 className="text-3xl font-bold font-arabic text-white">
+              {selectedCategory} ({filteredOffers.length} وحدة)
             </h2>
             <Button
               onClick={() => setSelectedCategory(null)}
@@ -353,9 +365,31 @@ const ChaletsOffers = () => {
                       </div>
 
                       {offer.facilities && (
-                        <p className="text-sm text-muted-foreground font-arabic mb-4">
-                          <strong>المرافق:</strong> {offer.facilities}
-                        </p>
+                        <div className="mb-4">
+                          <p className="text-sm font-bold font-arabic mb-2">المرافق:</p>
+                          <div className="flex flex-wrap gap-1">
+                            {offer.facilities.split(',').map((facility, idx) => {
+                              const colors = [
+                                'bg-red-500/20 text-red-700 border-red-300',
+                                'bg-blue-500/20 text-blue-700 border-blue-300',
+                                'bg-green-500/20 text-green-700 border-green-300',
+                                'bg-purple-500/20 text-purple-700 border-purple-300',
+                                'bg-orange-500/20 text-orange-700 border-orange-300',
+                                'bg-pink-500/20 text-pink-700 border-pink-300',
+                                'bg-cyan-500/20 text-cyan-700 border-cyan-300',
+                                'bg-yellow-500/20 text-yellow-700 border-yellow-300'
+                              ];
+                              return (
+                                <span
+                                  key={idx}
+                                  className={`px-2 py-1 rounded-full text-xs font-arabic border ${colors[idx % colors.length]}`}
+                                >
+                                  {facility.trim()}
+                                </span>
+                              );
+                            })}
+                          </div>
+                        </div>
                       )}
                     </div>
 
@@ -442,6 +476,7 @@ const ChaletsOffers = () => {
           </div>
         </div>
       )}
+      </div>
 
       {notification && (
         <Notification
