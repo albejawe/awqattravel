@@ -253,10 +253,13 @@ const ChaletsOffers = () => {
       <div className="container mx-auto px-4 py-12" dir={direction}>
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 font-arabic text-foreground">
-            الشاليهات والمنتجعات
+            {selectedCategory || 'الشاليهات والمنتجعات'}
           </h1>
           <p className="text-xl text-muted-foreground font-arabic max-w-2xl mx-auto">
-            استمتع بإقامة فاخرة في أجمل المواقع السياحية
+            {selectedCategory 
+              ? `${filteredOffers.length} ${filteredOffers.length === 1 ? 'وحدة متاحة' : 'وحدة متاحة'}`
+              : 'استمتع بإقامة فاخرة في أجمل المواقع السياحية'
+            }
           </p>
         </div>
 
