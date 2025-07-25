@@ -123,7 +123,7 @@ const ChaletsOffers = () => {
 
   const handleWhatsAppContact = (offer: ChaletOffer) => {
     const message = `أرغب بالاستفسار عن ${offer.name}`;
-    const whatsappUrl = `https://wa.me/96522289080?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/96551148114?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
@@ -307,7 +307,7 @@ const ChaletsOffers = () => {
                 variant="outline"
                 className="font-arabic"
               >
-                الصفحة الرئيسية
+                عروض العمرة والسياحة
               </Button>
               <Button
                 onClick={() => setSelectedCategory(null)}

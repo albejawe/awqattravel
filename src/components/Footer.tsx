@@ -1,13 +1,17 @@
 import { MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useLocation } from "react-router-dom";
 
 const Footer = () => {
   const { t, direction } = useLanguage();
+  const location = useLocation();
+  const isChaletsPage = location.pathname === '/chalets';
   
   const handleWhatsAppContact = () => {
     const message = "أرغب بالاستفسار عن خدماتكم";
-    const whatsappUrl = `https://wa.me/96522289080?text=${encodeURIComponent(message)}`;
+    const whatsappNumber = isChaletsPage ? "96551148114" : "96522289080";
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
@@ -33,6 +37,18 @@ const Footer = () => {
             </div>
           </div>
         </div>
+        
+        {/* Link for Chalets page only */}
+        {isChaletsPage && (
+          <div className="text-center mb-6">
+            <button
+              onClick={() => window.open('https://awqattravel.com', '_blank')}
+              className="text-white hover:text-gold transition-colors font-arabic text-lg underline"
+            >
+              عروض العمرة والسياحة
+            </button>
+          </div>
+        )}
         
         <div className="border-t border-white/20 mt-8 pt-8 text-center font-arabic">
           <p>{t('footer.company')}</p>
