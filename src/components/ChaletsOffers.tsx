@@ -40,6 +40,7 @@ const ChaletsOffers = () => {
   const [offers, setOffers] = useState<ChaletOffer[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedOffer, setSelectedOffer] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [notification, setNotification] = useState<{ message: string; show: boolean } | null>(null);
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
@@ -50,6 +51,13 @@ const ChaletsOffers = () => {
 
   useEffect(() => {
     fetchOffers();
+    
+    // فحص معاملات URL للعرض المحدد
+    const urlParams = new URLSearchParams(window.location.search);
+    const offerParam = urlParams.get('offer');
+    if (offerParam) {
+      setSelectedOffer(decodeURIComponent(offerParam));
+    }
   }, []);
 
   const fetchOffers = async () => {
@@ -117,7 +125,9 @@ const ChaletsOffers = () => {
     }
   };
 
-  const filteredOffers = selectedCategory 
+  const filteredOffers = selectedOffer
+    ? offers.filter(offer => offer.name === selectedOffer)
+    : selectedCategory 
     ? offers.filter(offer => offer.category === selectedCategory)
     : offers;
 
@@ -128,19 +138,23 @@ const ChaletsOffers = () => {
   };
 
   const handleShare = async (offer: ChaletOffer) => {
+    const offerUrl = `${window.location.origin}/chalets?offer=${encodeURIComponent(offer.name)}`;
+    
     if (navigator.share) {
       try {
         await navigator.share({
           title: offer.name,
           text: offer.details,
-          url: window.location.href
+          url: offerUrl
         });
         setNotification({ message: 'تم مشاركة العرض بنجاح', show: true });
       } catch (error) {
         console.error('Error sharing:', error);
+        navigator.clipboard.writeText(offerUrl);
+        setNotification({ message: 'تم نسخ الرابط', show: true });
       }
     } else {
-      navigator.clipboard.writeText(`${offer.name} - ${window.location.href}`);
+      navigator.clipboard.writeText(offerUrl);
       setNotification({ message: 'تم نسخ الرابط', show: true });
     }
   };
@@ -253,17 +267,24 @@ const ChaletsOffers = () => {
       <div className="container mx-auto px-4 py-12" dir={direction}>
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 font-arabic text-foreground">
-            {selectedCategory || 'الشاليهات والمنتجعات'}
+            {selectedOffer 
+              ? selectedOffer
+              : selectedCategory 
+              ? selectedCategory
+              : 'الشاليهات والمنتجعات'
+            }
           </h1>
           <p className="text-xl text-muted-foreground font-arabic max-w-2xl mx-auto">
-            {selectedCategory 
+            {selectedOffer 
+              ? 'تفاصيل العرض المحدد'
+              : selectedCategory 
               ? `${filteredOffers.length} ${filteredOffers.length === 1 ? 'وحدة متاحة' : 'وحدات متاحة'}`
               : 'استمتع بإقامة فاخرة في أجمل المواقع السياحية'
             }
           </p>
         </div>
 
-      {!selectedCategory ? (
+      {!selectedCategory && !selectedOffer ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {categories.map((category) => {
             const categoryOffers = offers.filter(offer => offer.category === category);
@@ -308,12 +329,24 @@ const ChaletsOffers = () => {
               >
                 عروض العمرة والسياحة
               </Button>
-              <Button
-                onClick={() => setSelectedCategory(null)}
-                className="font-arabic bg-orange-500 hover:bg-orange-600 text-white"
-              >
-                العودة للفئات
-              </Button>
+              {selectedOffer ? (
+                <Button
+                  onClick={() => {
+                    setSelectedOffer(null);
+                    window.history.pushState({}, '', '/chalets');
+                  }}
+                  className="font-arabic bg-orange-500 hover:bg-orange-600 text-white"
+                >
+                  العودة لجميع العروض
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => setSelectedCategory(null)}
+                  className="font-arabic bg-orange-500 hover:bg-orange-600 text-white"
+                >
+                  العودة للفئات
+                </Button>
+              )}
             </div>
           </div>
 
