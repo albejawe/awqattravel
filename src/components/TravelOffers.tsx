@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MessageCircle, Play, Info, Download, Share2, Calendar, MapPin, Star, ChevronLeft, ChevronRight, X, Building2, Plane } from "lucide-react";
+import { MessageCircle, Play, Info, Download, Share2, Calendar, MapPin, Star, ChevronLeft, ChevronRight, X, Building2, Plane, Bed } from "lucide-react";
 import Papa from "papaparse";
 import Notification from "./Notification";
 import ImageGallery from "./ImageGallery";
@@ -440,23 +440,25 @@ ${priceDetails.child ? `- سعر الطفل: ${priceDetails.child} د.ك` : ""}`
                         </span>}
                     </div>
 
-                    {/* اسم الفندق والتقييم */}
-                    <div className="flex items-center justify-between mb-2">
+                    {/* اسم الفندق */}
+                    <div className="mb-2">
                       <div className="flex items-center">
                         <Building2 className="h-4 w-4 text-primary ml-2" />
-                        <span className="text-muted-foreground font-arabic text-sm">
+                        <span className="font-arabic text-sm font-bold">
                           {offer.hotel}
                         </span>
                       </div>
-                      {renderStars(offer.rating)}
                     </div>
 
                     {/* نوع الغرفة */}
                     {offer.roomType && (
                       <div className="mb-3">
-                        <span className="font-arabic text-muted-foreground text-sm">
-                          نوع الغرفة: {offer.roomType}
-                        </span>
+                        <div className="flex items-center">
+                          <Bed className="h-4 w-4 text-primary ml-2" />
+                          <span className="font-arabic text-muted-foreground text-sm">
+                            نوع الغرفة: {offer.roomType}
+                          </span>
+                        </div>
                       </div>
                     )}
 
@@ -472,12 +474,12 @@ ${priceDetails.child ? `- سعر الطفل: ${priceDetails.child} د.ك` : ""}`
 
                     {/* تواريخ الذهاب والعودة */}
                     {(offer.departureDate || offer.returnDate) && (
-                      <div className="mb-4 bg-muted/30 rounded-lg p-3">
+                      <div className="mb-4 bg-white border border-muted rounded-lg p-3 shadow-sm">
                         <div className="space-y-2">
                           {offer.departureDate && (
                             <div className="flex items-center text-sm">
                               <Calendar className="h-4 w-4 text-primary ml-2" />
-                              <span className="font-arabic text-muted-foreground">
+                              <span className="font-arabic text-foreground font-medium">
                                 الذهاب: {offer.departureDate} {offer.departureTime && `- ${offer.departureTime}`}
                               </span>
                             </div>
@@ -485,7 +487,7 @@ ${priceDetails.child ? `- سعر الطفل: ${priceDetails.child} د.ك` : ""}`
                           {offer.returnDate && (
                             <div className="flex items-center text-sm">
                               <Calendar className="h-4 w-4 text-primary ml-2" />
-                              <span className="font-arabic text-muted-foreground">
+                              <span className="font-arabic text-foreground font-medium">
                                 العودة: {offer.returnDate} {offer.returnTime && `- ${offer.returnTime}`}
                               </span>
                             </div>
