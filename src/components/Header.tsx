@@ -36,12 +36,15 @@ const Header = () => {
           </Button>
           
           {/* Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center gap-3">
             <img 
               src="/lovable-uploads/1ed71778-e792-40a8-8405-33112955d820.png" 
               alt="شركة أوقات للسياحة والسفر" 
               className="h-12 w-auto"
             />
+            <span className="text-primary-dark font-bold text-sm font-arabic">
+              شركة أوقات للسياحة والسفر
+            </span>
           </div>
           
           {/* Spacer */}

@@ -20,7 +20,7 @@ const Hero = () => {
       
       <div className="container mx-auto px-4 text-center relative z-10 pt-20">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 font-arabic animate-fade-in">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 font-arabic animate-fade-in">
             <span className="text-gold-gradient">{t('hero.title')}</span>
           </h1>
           

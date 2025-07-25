@@ -506,6 +506,27 @@ ${priceDetails.child ? `- سعر الطفل: ${priceDetails.child} د.ك` : ""}`
                   </Card>
                 );
               })}
+              
+              {/* Chalets Card */}
+              <Card
+                className="card-gold cursor-pointer group overflow-hidden relative"
+                onClick={() => window.location.href = '/chalets'}
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <div className="w-full h-full bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center">
+                    <span className="text-white text-4xl">🏖️</span>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-b from-primary/40 via-primary/60 to-black/80"></div>
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <h3 className="text-2xl font-bold font-arabic mb-2 group-hover:text-primary transition-colors">
+                      الشاليهات والمنتجعات
+                    </h3>
+                    <p className="text-white/90 font-arabic text-sm">
+                      مجموعة متنوعة من الشاليهات
+                    </p>
+                  </div>
+                </div>
+              </Card>
             </div>
           </div>
         )}

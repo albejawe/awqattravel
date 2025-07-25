@@ -15,7 +15,7 @@ const translations = {
     'language.toggle': 'ع',
     
     // Hero
-    'hero.title': 'عروض شركة أوقات للسياحة والسفر',
+    'hero.title': 'اكتشف أقوى العروض في الكويت',
     'hero.subtitle': 'مختصون في عروض العمرة والسياحة والفيزا منذ أكثر من 10 أعوام',
     'hero.description': 'اكتشف أجمل الوجهات السياحية مع باقات مميزة وخدمات متخصصة',
     'hero.cta': 'اكتشف عروضنا المميزة',
@@ -82,7 +82,7 @@ const translations = {
     'language.toggle': 'en',
     
     // Hero
-    'hero.title': 'AWQAT Travel & Tourism Offers',
+    'hero.title': 'Discover the Best Offers in Kuwait',
     'hero.subtitle': 'Specialists in Umrah, Tourism and Visa offers for over 10 years',
     'hero.description': 'Discover the most beautiful tourist destinations with specialized packages and professional services',
     'hero.cta': 'Discover Our Special Offers',
