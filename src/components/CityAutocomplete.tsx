@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { MapPin, Check } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface CityAutocompleteProps {
   value: string;
@@ -26,7 +27,7 @@ const popularCities = [
 ];
 
 export function CityAutocomplete({ value, onChange, placeholder }: CityAutocompleteProps) {
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [filteredCities, setFilteredCities] = useState<string[]>([]);
 
   useEffect(() => {
@@ -34,51 +35,57 @@ export function CityAutocomplete({ value, onChange, placeholder }: CityAutocompl
       const filtered = popularCities.filter(city =>
         city.toLowerCase().includes(value.toLowerCase()) ||
         city.includes(value)
-      ).slice(0, 10);
+      ).slice(0, 8);
       setFilteredCities(filtered);
+      setIsOpen(filtered.length > 0);
     } else {
       setFilteredCities([]);
+      setIsOpen(false);
     }
   }, [value]);
 
+  const handleCitySelect = (city: string) => {
+    onChange(city);
+    setIsOpen(false);
+  };
+
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <div className="relative">
-          <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder={placeholder}
-            value={value}
-            onChange={(e) => {
-              onChange(e.target.value);
-              setOpen(e.target.value.length > 0);
-            }}
-            onFocus={() => setOpen(value.length > 0)}
-            className="pl-10"
-          />
+    <div className="relative">
+      <div className="relative">
+        <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+        <Input
+          placeholder={placeholder}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onFocus={() => {
+            if (filteredCities.length > 0) {
+              setIsOpen(true);
+            }
+          }}
+          className="pl-10"
+        />
+      </div>
+      
+      {isOpen && filteredCities.length > 0 && (
+        <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-popover border rounded-md shadow-md">
+          <ScrollArea className="max-h-60">
+            <div className="p-1">
+              {filteredCities.map((city) => (
+                <Button
+                  key={city}
+                  variant="ghost"
+                  className="w-full justify-start h-auto p-2 text-right"
+                  onClick={() => handleCitySelect(city)}
+                >
+                  <MapPin className="ml-2 h-4 w-4 text-muted-foreground" />
+                  <span>{city}</span>
+                  {value === city && <Check className="mr-2 h-4 w-4" />}
+                </Button>
+              ))}
+            </div>
+          </ScrollArea>
         </div>
-      </PopoverTrigger>
-      <PopoverContent className="w-full p-0" align="start">
-        <Command>
-          <CommandGroup>
-            {filteredCities.length === 0 && value.length > 0 && (
-              <CommandEmpty>لا توجد مدن مطابقة</CommandEmpty>
-            )}
-            {filteredCities.map((city) => (
-              <CommandItem
-                key={city}
-                onSelect={() => {
-                  onChange(city);
-                  setOpen(false);
-                }}
-              >
-                <MapPin className="mr-2 h-4 w-4" />
-                {city}
-              </CommandItem>
-            ))}
-          </CommandGroup>
-        </Command>
-      </PopoverContent>
-    </Popover>
+      )}
+    </div>
   );
 }
