@@ -10,6 +10,10 @@ import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminBlog from "./pages/AdminBlog";
+import AdminHotels from "./pages/AdminHotels";
+import AdminFlights from "./pages/AdminFlights";
+import AdminCategories from "./pages/AdminCategories";
+import AdminBlogImportExport from "./pages/AdminBlogImportExport";
 import BlogPage from "./pages/BlogPage";
 import BlogDetailPage from "./pages/BlogDetailPage";
 
@@ -30,6 +34,10 @@ const App = () => (
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/blog" element={<AdminBlog />} />
+            <Route path="/admin/hotels" element={<AdminHotels />} />
+            <Route path="/admin/flights" element={<AdminFlights />} />
+            <Route path="/admin/categories" element={<AdminCategories />} />
+            <Route path="/admin/blog/import-export" element={<AdminBlogImportExport />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
