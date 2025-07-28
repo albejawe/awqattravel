@@ -11,6 +11,7 @@ import { ArrowLeft, Search, MapPin, Calendar, Users, Clock, DollarSign, Filter, 
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { supabase } from "@/integrations/supabase/client";
+import { CityAutocomplete } from "@/components/CityAutocomplete";
 
 interface FlightResult {
   id: string;
@@ -219,30 +220,20 @@ const AdminFlights = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="from">من</Label>
-                  <div className="relative">
-                    <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="from"
-                      placeholder="مدينة المغادرة..."
-                      value={from}
-                      onChange={(e) => setFrom(e.target.value)}
-                      className="pl-10"
-                    />
-                  </div>
+                  <CityAutocomplete
+                    value={from}
+                    onChange={setFrom}
+                    placeholder="مدينة المغادرة..."
+                  />
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="to">إلى</Label>
-                  <div className="relative">
-                    <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="to"
-                      placeholder="مدينة الوصول..."
-                      value={to}
-                      onChange={(e) => setTo(e.target.value)}
-                      className="pl-10"
-                    />
-                  </div>
+                  <CityAutocomplete
+                    value={to}
+                    onChange={setTo}
+                    placeholder="مدينة الوصول..."
+                  />
                 </div>
 
                 <div className="space-y-2">

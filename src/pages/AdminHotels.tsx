@@ -10,6 +10,7 @@ import { toast } from "@/hooks/use-toast";
 import { ArrowLeft, Search, MapPin, Calendar, Users, Star, DollarSign, Filter } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { supabase } from "@/integrations/supabase/client";
+import { CityAutocomplete } from "@/components/CityAutocomplete";
 
 interface HotelResult {
   id: string;
@@ -157,16 +158,11 @@ const AdminHotels = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="destination">الوجهة</Label>
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    id="destination"
-                    placeholder="أدخل اسم المدينة..."
-                    value={destination}
-                    onChange={(e) => setDestination(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
+                <CityAutocomplete
+                  value={destination}
+                  onChange={setDestination}
+                  placeholder="أدخل اسم المدينة..."
+                />
               </div>
 
               <div className="space-y-2">
