@@ -78,7 +78,7 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
       };
 
       // Submit to Google Apps Script
-      const response = await fetch("https://script.google.com/macros/s/AKfycbxDpoa92eOOfmnYRYZDjDS_B5WF2jOyP-ojsfy-I8sbkUnkg6zspUra2E5YTNN5jOEA/exec", {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbzrUdl4E-7QXWp3mVa1xGiX-7FhR5G3nC3GwQFMIPTf-bghX8F1WNxYKjbnAOEQhS9V/exec", {
         method: "POST",
         mode: "no-cors",
         headers: {
