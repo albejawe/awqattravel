@@ -64,20 +64,26 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
     setIsSubmitting(true);
 
     try {
-      // Prepare data for Google Apps Script using FormData
+      // Show loading message
+      toast({
+        title: "جاري التقديم…",
+        description: "يرجى الانتظار أثناء حفظ البيانات"
+      });
+
+      // Prepare data for Google Apps Script using FormData with English headers
       const submitData = new FormData();
-      submitData.append('الجنسية', formData.nationality);
-      submitData.append('الوجهة', formData.destination);
-      submitData.append('نوع التأشيرة', formData.visaType || "غير محدد");
-      submitData.append('تاريخ السفر المتوقع', formData.travelDate ? format(formData.travelDate, "yyyy-MM-dd") : "غير محدد");
-      submitData.append('المدة', formData.duration || "غير محدد");
-      submitData.append('عدد المسافرين', formData.travelers || "غير محدد");
-      submitData.append('رقم الهاتف', formData.phone);
-      submitData.append('البريد الإلكتروني', formData.email || "غير محدد");
-      submitData.append('هل لديك تأشيرة سابقة', formData.hasPreviousVisa || "غير محدد");
+      submitData.append('Nationality', formData.nationality);
+      submitData.append('Destination', formData.destination);
+      submitData.append('Visa Type', formData.visaType || "غير محدد");
+      submitData.append('Expected Travel Date', formData.travelDate ? format(formData.travelDate, "yyyy-MM-dd") : "غير محدد");
+      submitData.append('Duration', formData.duration || "غير محدد");
+      submitData.append('Number of Travelers', formData.travelers || "غير محدد");
+      submitData.append('Phone Number', formData.phone);
+      submitData.append('Email', formData.email || "غير محدد");
+      submitData.append('Do you have a previous visa?', formData.hasPreviousVisa || "غير محدد");
 
       // Submit to Google Apps Script first
-      const response = await fetch("https://script.google.com/macros/s/AKfycbzrDGsBjkzLIiO3EZU4zfg8lbQQhxu_1por0lkvEkDI0x5XNuEIMGPv07hs-3qxo-eX/exec", {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbxop-1HbUQVFCNf4QY6qKjl6WCyJBF9s5pwctzF9nr03AEsUInEciwf-aMh827v2YbT/exec", {
         method: "POST",
         body: submitData
       });
@@ -89,8 +95,8 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
 
       // Show success message
       toast({
-        title: "تم حفظ البيانات بنجاح",
-        description: "سيتم تحويلك إلى واتساب للمتابعة"
+        title: "تم التقديم بنجاح، جاري التوجيه للواتساب",
+        description: "سيتم تحويلك إلى واتساب خلال ثواني"
       });
 
       // Prepare data for WhatsApp message
@@ -294,7 +300,12 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
 
           <div className="flex gap-4 pt-4">
             <Button type="submit" disabled={isSubmitting} className="flex-1" size="lg">
-              {isSubmitting ? "جاري الإرسال..." : "التقديم الآن"}
+              {isSubmitting ? (
+                <div className="flex items-center gap-2">
+                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                  جاري التقديم…
+                </div>
+              ) : "التقديم الآن"}
             </Button>
             <Button type="button" variant="outline" onClick={onClose} className="flex-1" size="lg">
               إلغاء

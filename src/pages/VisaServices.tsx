@@ -30,7 +30,7 @@ const VisaServices = () => {
         <section className="relative bg-gradient-to-br from-primary to-primary/80 text-white py-20">
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              خدمات الفيزا - شركة أوقات للسياحة والسفر
+              خدمات الفيزا من اوقات
             </h1>
             <h2 className="text-2xl md:text-3xl font-semibold mb-8">
               أسرع طريقة للحصول على تأشيرة سفرك
@@ -74,36 +74,30 @@ const VisaServices = () => {
               <h2 className="text-3xl font-bold mb-4">لماذا تختار خدماتنا؟</h2>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+              {[
+                "تقديم بسيط وسهل يُنجز خلال وقت قصير جداً.",
+                "تدقيق شامل للطلب لزيادة فرص القبول من المحاولة الأولى.",
+                "يمكنك التقديم في أي وقت على مدار الساعة (24/7).",
+                "ننجز عنك جميع التفاصيل المعقدة لتسافر بلا قلق.",
+                "دعم متواصل عبر الدردشة، الواتساب، والبريد الإلكتروني.",
+                "إمكانية حفظ الطلب ومتابعته لاحقاً.",
+                "خيارات دفع متعددة.",
+                "أكثر من 366 عميل راضٍ وسعيد بخدمتنا."
+              ].map((feature, index) => (
+                <div key={index} className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 p-4 rounded-lg border-2 border-green-200 dark:border-green-700/50 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                  <div className="flex items-start gap-3 text-right">
+                    <div className="flex-shrink-0 w-6 h-6 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mt-0.5">
+                      <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300 font-medium">
+                      {feature}
+                    </p>
+                  </div>
                 </div>
-                <h3 className="text-xl font-semibold mb-2">سرعة في الإنجاز</h3>
-                <p className="text-muted-foreground">نحرص على إنجاز معاملاتك في أسرع وقت ممكن</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-semibold mb-2">ضمان الجودة</h3>
-                <p className="text-muted-foreground">فريق محترف ومتخصص في خدمات التأشيرات</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 2.25a9.75 9.75 0 109.75 9.75A9.75 9.75 0 0012 2.25z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-semibold mb-2">دعم مستمر</h3>
-                <p className="text-muted-foreground">خدمة عملاء متاحة على مدار الساعة لمساعدتك</p>
-              </div>
+              ))}
             </div>
           </div>
         </section>

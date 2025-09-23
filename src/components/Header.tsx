@@ -22,17 +22,8 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Navigation */}
           <div className="flex items-center gap-4">
-            <Button onClick={() => navigate('/')} variant={location.pathname === '/' ? 'default' : 'ghost'} size="sm">
-              الرئيسية
-            </Button>
-            <Button onClick={() => navigate('/chalets')} variant={location.pathname === '/chalets' ? 'default' : 'ghost'} size="sm">
-              الشاليهات
-            </Button>
             <Button onClick={() => navigate('/visa-services')} variant={location.pathname === '/visa-services' ? 'default' : 'ghost'} size="sm">
-              خدمات الفيزا
-            </Button>
-            <Button onClick={() => navigate('/blog')} variant={location.pathname.startsWith('/blog') ? 'default' : 'ghost'} size="sm">
-              المدونة
+              الرئيسية
             </Button>
           </div>
           

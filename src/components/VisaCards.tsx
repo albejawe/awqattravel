@@ -81,7 +81,7 @@ const VisaCards = ({ onCountrySelect }: VisaCardsProps) => {
                     e.currentTarget.src = "https://via.placeholder.com/400x200?text=صورة+غير+متوفرة";
                   }}
                 />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/70 transition-all duration-300"></div>
               </div>
             )}
           </CardHeader>
@@ -97,17 +97,17 @@ const VisaCards = ({ onCountrySelect }: VisaCardsProps) => {
             
             <div className="flex flex-wrap gap-2 mb-4 justify-end">
               {country.visaType1 && (
-                <Badge variant="secondary" className="text-sm">
+                <Badge className="text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white border-0 hover:from-blue-600 hover:to-blue-700">
                   {country.visaType1}
                 </Badge>
               )}
               {country.visaType2 && (
-                <Badge variant="secondary" className="text-sm">
+                <Badge className="text-sm bg-gradient-to-r from-green-500 to-green-600 text-white border-0 hover:from-green-600 hover:to-green-700">
                   {country.visaType2}
                 </Badge>
               )}
               {country.visaType3 && (
-                <Badge variant="secondary" className="text-sm">
+                <Badge className="text-sm bg-gradient-to-r from-purple-500 to-purple-600 text-white border-0 hover:from-purple-600 hover:to-purple-700">
                   {country.visaType3}
                 </Badge>
               )}
