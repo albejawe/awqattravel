@@ -163,10 +163,10 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
         <form onSubmit={handleSubmit} className="space-y-6 mt-6">
           <div className="grid md:grid-cols-2 gap-4">
             {/* Nationality */}
-            <div className="space-y-2">
-              <Label>الجنسية</Label>
+            <div className="space-y-2 text-right">
+              <Label className="text-right block mb-2 font-semibold">الجنسية</Label>
               <Select value={formData.nationality} onValueChange={(value) => setFormData(prev => ({ ...prev, nationality: value }))}>
-                <SelectTrigger>
+                <SelectTrigger className="text-right">
                   <SelectValue placeholder="اختر الجنسية" />
                 </SelectTrigger>
                 <SelectContent>
@@ -178,10 +178,10 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
             </div>
 
             {/* Destination */}
-            <div className="space-y-2">
-              <Label>الوجهة <span className="text-red-500">*</span></Label>
+            <div className="space-y-2 text-right">
+              <Label className="text-right block mb-2 font-semibold">الوجهة <span className="text-red-500">*</span></Label>
               <Select value={formData.destination} onValueChange={(value) => setFormData(prev => ({ ...prev, destination: value }))}>
-                <SelectTrigger>
+                <SelectTrigger className="text-right">
                   <SelectValue placeholder="اختر الوجهة" />
                 </SelectTrigger>
                 <SelectContent>
@@ -193,10 +193,10 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
             </div>
 
             {/* Visa Type */}
-            <div className="space-y-2">
-              <Label>نوع التأشيرة</Label>
+            <div className="space-y-2 text-right">
+              <Label className="text-right block mb-2 font-semibold">نوع التأشيرة</Label>
               <Select value={formData.visaType} onValueChange={(value) => setFormData(prev => ({ ...prev, visaType: value }))}>
-                <SelectTrigger>
+                <SelectTrigger className="text-right">
                   <SelectValue placeholder="اختر نوع التأشيرة" />
                 </SelectTrigger>
                 <SelectContent>
@@ -208,18 +208,18 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
             </div>
 
             {/* Travel Date */}
-            <div className="space-y-2">
-              <Label>تاريخ السفر المتوقع</Label>
+            <div className="space-y-2 text-right">
+              <Label className="text-right block mb-2 font-semibold">تاريخ السفر المتوقع</Label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full justify-start text-left font-normal",
+                      "w-full justify-start text-right font-normal",
                       !formData.travelDate && "text-muted-foreground"
                     )}
                   >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    <CalendarIcon className="ml-2 h-4 w-4" />
                     {formData.travelDate ? format(formData.travelDate, "yyyy-MM-dd") : "اختر التاريخ"}
                   </Button>
                 </PopoverTrigger>
@@ -236,20 +236,22 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
             </div>
 
             {/* Duration */}
-            <div className="space-y-2">
-              <Label>المدة</Label>
+            <div className="space-y-2 text-right">
+              <Label className="text-right block mb-2 font-semibold">المدة</Label>
               <Input
                 value={formData.duration}
                 onChange={(e) => setFormData(prev => ({ ...prev, duration: e.target.value }))}
                 placeholder="مثال: 10 أيام، شهر واحد"
+                className="text-right"
+                dir="rtl"
               />
             </div>
 
             {/* Number of Travelers */}
-            <div className="space-y-2">
-              <Label>عدد المسافرين</Label>
+            <div className="space-y-2 text-right">
+              <Label className="text-right block mb-2 font-semibold">عدد المسافرين</Label>
               <Select value={formData.travelers} onValueChange={(value) => setFormData(prev => ({ ...prev, travelers: value }))}>
-                <SelectTrigger>
+                <SelectTrigger className="text-right">
                   <SelectValue placeholder="اختر العدد" />
                 </SelectTrigger>
                 <SelectContent>
@@ -262,33 +264,37 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
           </div>
 
           {/* Phone */}
-          <div className="space-y-2">
-            <Label>رقم الهاتف <span className="text-red-500">*</span></Label>
+          <div className="space-y-2 text-right">
+            <Label className="text-right block mb-2 font-semibold">رقم الهاتف <span className="text-red-500">*</span></Label>
             <Input
               type="tel"
               value={formData.phone}
               onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
               placeholder="مثال: +96522289080"
+              className="text-right"
+              dir="rtl"
               required
             />
           </div>
 
           {/* Email */}
-          <div className="space-y-2">
-            <Label>البريد الإلكتروني</Label>
+          <div className="space-y-2 text-right">
+            <Label className="text-right block mb-2 font-semibold">البريد الإلكتروني</Label>
             <Input
               type="email"
               value={formData.email}
               onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
               placeholder="example@email.com"
+              className="text-right"
+              dir="rtl"
             />
           </div>
 
           {/* Previous Visa */}
-          <div className="space-y-2">
-            <Label>هل لديك تأشيرة سابقة؟</Label>
+          <div className="space-y-2 text-right">
+            <Label className="text-right block mb-2 font-semibold">هل لديك تأشيرة سابقة؟</Label>
             <Select value={formData.hasPreviousVisa} onValueChange={(value) => setFormData(prev => ({ ...prev, hasPreviousVisa: value }))}>
-              <SelectTrigger>
+              <SelectTrigger className="text-right">
                 <SelectValue placeholder="اختر الإجابة" />
               </SelectTrigger>
               <SelectContent>

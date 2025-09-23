@@ -23,7 +23,7 @@ const Header = () => {
           {/* Navigation */}
           <div className="flex items-center gap-4">
             <Button onClick={() => navigate('/visa-services')} variant={location.pathname === '/visa-services' ? 'default' : 'ghost'} size="sm">
-              الرئيسية
+              خدمات الفيزا من اوقات
             </Button>
           </div>
           
