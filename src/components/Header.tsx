@@ -20,11 +20,8 @@ const Header = () => {
   return <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white/95 backdrop-blur-md shadow-elegant' : 'bg-white'}`}>
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          {/* Navigation */}
+          {/* Navigation - Empty for now */}
           <div className="flex items-center gap-4">
-            <Button onClick={() => navigate('/visa-services')} variant={location.pathname === '/visa-services' ? 'default' : 'ghost'} size="sm">
-              خدمات الفيزا من اوقات
-            </Button>
           </div>
           
           {/* Logo */}

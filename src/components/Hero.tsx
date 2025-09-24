@@ -28,15 +28,27 @@ const Hero = () => {
             {t('hero.subtitle')}
           </p>
           
-          <Button 
-            onClick={scrollToOffers}
-            size="lg"
-            className="btn-gold text-lg px-8 py-6 rounded-xl font-arabic animate-bounce-in"
-            style={{ animationDelay: '0.4s' }}
-          >
-            {t('hero.cta')}
-            <ArrowDown className={`h-5 w-5 ${direction === 'rtl' ? 'mr-2' : 'ml-2'}`} />
-          </Button>
+          <div className="space-y-4">
+            <Button 
+              onClick={scrollToOffers}
+              size="lg"
+              className="btn-gold text-lg px-8 py-6 rounded-xl font-arabic animate-bounce-in block mx-auto"
+              style={{ animationDelay: '0.4s' }}
+            >
+              {t('hero.cta')}
+              <ArrowDown className={`h-5 w-5 ${direction === 'rtl' ? 'mr-2' : 'ml-2'}`} />
+            </Button>
+            
+            <Button 
+              onClick={() => window.location.href = '/visa-services'}
+              size="sm"
+              variant="outline"
+              className="text-base px-6 py-3 rounded-xl font-arabic bg-white/10 border-white/30 text-white hover:bg-white/20 backdrop-blur-sm"
+              style={{ animationDelay: '0.6s' }}
+            >
+              خدمات الفيزا من أوقات
+            </Button>
+          </div>
         </div>
       </div>
       

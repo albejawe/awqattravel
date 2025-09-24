@@ -38,17 +38,27 @@ const Footer = () => {
           </div>
         </div>
         
-        {/* Link for Chalets page only */}
-        {isChaletsPage && (
-          <div className="text-center mb-6">
+        {/* Links */}
+        <div className="text-center mb-6 space-y-3">
+          {isChaletsPage && (
+            <div>
+              <button
+                onClick={() => window.open('https://awqattravel.com', '_blank')}
+                className="text-white hover:text-gold transition-colors font-arabic text-lg underline"
+              >
+                عروض العمرة والسياحة
+              </button>
+            </div>
+          )}
+          <div>
             <button
-              onClick={() => window.open('https://awqattravel.com', '_blank')}
-              className="text-white hover:text-gold transition-colors font-arabic text-lg underline"
+              onClick={() => window.location.href = '/visa-services'}
+              className="text-white/80 hover:text-white transition-colors font-arabic text-base"
             >
-              عروض العمرة والسياحة
+              خدمات الفيزا من أوقات
             </button>
           </div>
-        )}
+        </div>
         
         <div className="border-t border-white/20 mt-8 pt-8 text-center font-arabic">
           <p>{t('footer.company')}</p>

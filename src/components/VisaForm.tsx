@@ -8,6 +8,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CalendarIcon, X } from "lucide-react";
 import { format } from "date-fns";
+import { ar } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 
@@ -220,15 +221,25 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
                     )}
                   >
                     <CalendarIcon className="ml-2 h-4 w-4" />
-                    {formData.travelDate ? format(formData.travelDate, "yyyy-MM-dd") : "اختر التاريخ"}
+                    {formData.travelDate ? format(formData.travelDate, "PPP", { locale: ar }) : "اختر التاريخ"}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
                     selected={formData.travelDate || undefined}
-                    onSelect={(date) => setFormData(prev => ({ ...prev, travelDate: date || null }))}
+                    onSelect={(date) => {
+                      setFormData(prev => ({ ...prev, travelDate: date || null }));
+                      // Close the popover automatically after selection
+                      setTimeout(() => {
+                        const popoverTrigger = document.querySelector('[data-state="open"]');
+                        if (popoverTrigger) {
+                          (popoverTrigger as HTMLElement).click();
+                        }
+                      }, 100);
+                    }}
                     initialFocus
+                    disabled={(date) => date < new Date()}
                     className="pointer-events-auto"
                   />
                 </PopoverContent>

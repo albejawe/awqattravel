@@ -67,62 +67,64 @@ const VisaCards = ({ onCountrySelect }: VisaCardsProps) => {
   }
 
   return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {countries.map((country, index) => (
-        <Card key={index} className="hover:shadow-lg transition-shadow duration-300 cursor-pointer group">
-          <CardHeader className="p-0">
-            {country.imageUrl && (
-              <div className="relative overflow-hidden rounded-t-lg h-48">
-                <img
-                  src={country.imageUrl}
-                  alt={country.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  onError={(e) => {
-                    e.currentTarget.src = "https://via.placeholder.com/400x200?text=صورة+غير+متوفرة";
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/70 transition-all duration-300"></div>
+    <div className="w-full flex justify-end">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl">
+        {countries.map((country, index) => (
+          <Card key={index} className="hover:shadow-lg transition-shadow duration-300 cursor-pointer group">
+            <CardHeader className="p-0">
+              {country.imageUrl && (
+                <div className="relative overflow-hidden rounded-t-lg h-48">
+                  <img
+                    src={country.imageUrl}
+                    alt={country.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    onError={(e) => {
+                      e.currentTarget.src = "https://via.placeholder.com/400x200?text=صورة+غير+متوفرة";
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/70 transition-all duration-300"></div>
+                </div>
+              )}
+            </CardHeader>
+            
+            <CardContent className="p-6">
+              <CardTitle className="text-xl font-bold mb-3 text-right">
+                {country.title}
+              </CardTitle>
+              
+              <p className="text-muted-foreground mb-4 text-right leading-relaxed">
+                {country.description}
+              </p>
+              
+              <div className="flex flex-wrap gap-2 mb-4 justify-end">
+                {country.visaType1 && (
+                  <Badge className="text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white border-0 hover:from-blue-600 hover:to-blue-700">
+                    {country.visaType1}
+                  </Badge>
+                )}
+                {country.visaType2 && (
+                  <Badge className="text-sm bg-gradient-to-r from-green-500 to-green-600 text-white border-0 hover:from-green-600 hover:to-green-700">
+                    {country.visaType2}
+                  </Badge>
+                )}
+                {country.visaType3 && (
+                  <Badge className="text-sm bg-gradient-to-r from-purple-500 to-purple-600 text-white border-0 hover:from-purple-600 hover:to-purple-700">
+                    {country.visaType3}
+                  </Badge>
+                )}
               </div>
-            )}
-          </CardHeader>
-          
-          <CardContent className="p-6">
-            <CardTitle className="text-xl font-bold mb-3 text-right">
-              {country.title}
-            </CardTitle>
-            
-            <p className="text-muted-foreground mb-4 text-right leading-relaxed">
-              {country.description}
-            </p>
-            
-            <div className="flex flex-wrap gap-2 mb-4 justify-end">
-              {country.visaType1 && (
-                <Badge className="text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white border-0 hover:from-blue-600 hover:to-blue-700">
-                  {country.visaType1}
-                </Badge>
-              )}
-              {country.visaType2 && (
-                <Badge className="text-sm bg-gradient-to-r from-green-500 to-green-600 text-white border-0 hover:from-green-600 hover:to-green-700">
-                  {country.visaType2}
-                </Badge>
-              )}
-              {country.visaType3 && (
-                <Badge className="text-sm bg-gradient-to-r from-purple-500 to-purple-600 text-white border-0 hover:from-purple-600 hover:to-purple-700">
-                  {country.visaType3}
-                </Badge>
-              )}
-            </div>
-            
-            <Button 
-              onClick={() => onCountrySelect(country.title)}
-              className="w-full"
-              size="lg"
-            >
-              طلب التأشيرة الآن
-            </Button>
-          </CardContent>
-        </Card>
-      ))}
+              
+              <Button 
+                onClick={() => onCountrySelect(country.title)}
+                className="w-full"
+                size="lg"
+              >
+                طلب التأشيرة الآن
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 };
