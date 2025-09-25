@@ -32,18 +32,20 @@ const Hero = () => {
             <Button 
               onClick={scrollToOffers}
               size="lg"
-              className="btn-gold text-xl px-12 py-7 rounded-2xl font-arabic animate-bounce-in block mx-auto shadow-elegant hover:shadow-glow transition-all duration-300 transform hover:scale-105"
+              className="btn-gold text-xl px-12 py-7 rounded-2xl font-arabic animate-bounce-in mx-auto shadow-elegant hover:shadow-glow transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
               style={{ animationDelay: '0.4s' }}
             >
-              اكتشف عروضنا المميزة
-              <ArrowDown className={`h-6 w-6 ${direction === 'rtl' ? 'mr-3' : 'ml-3'}`} />
+              <span className="flex items-center gap-3">
+                اكتشف عروضنا المميزة
+                <ArrowDown className="h-6 w-6" />
+              </span>
             </Button>
             
             <Button 
               onClick={() => window.location.href = '/visa-services'}
               size="lg"
               variant="outline"
-              className="text-lg px-10 py-5 rounded-2xl font-arabic bg-white/5 border-2 border-white/40 text-white/90 hover:bg-white/15 hover:text-white backdrop-blur-md transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg animate-fade-in"
+              className="text-lg px-10 py-5 rounded-2xl font-arabic bg-white/20 border-2 border-white/60 text-white hover:bg-white/30 hover:text-white backdrop-blur-md transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg animate-fade-in mx-auto flex items-center justify-center"
               style={{ animationDelay: '0.6s' }}
             >
               خدمات الفيزا من أوقات
