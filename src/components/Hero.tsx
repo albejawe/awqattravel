@@ -28,22 +28,22 @@ const Hero = () => {
             {t('hero.subtitle')}
           </p>
           
-          <div className="space-y-4">
+          <div className="space-y-6">
             <Button 
               onClick={scrollToOffers}
               size="lg"
-              className="btn-gold text-lg px-8 py-6 rounded-xl font-arabic animate-bounce-in block mx-auto"
+              className="btn-gold text-xl px-12 py-7 rounded-2xl font-arabic animate-bounce-in block mx-auto shadow-elegant hover:shadow-glow transition-all duration-300 transform hover:scale-105"
               style={{ animationDelay: '0.4s' }}
             >
-              {t('hero.cta')}
-              <ArrowDown className={`h-5 w-5 ${direction === 'rtl' ? 'mr-2' : 'ml-2'}`} />
+              اكتشف عروضنا المميزة
+              <ArrowDown className={`h-6 w-6 ${direction === 'rtl' ? 'mr-3' : 'ml-3'}`} />
             </Button>
             
             <Button 
               onClick={() => window.location.href = '/visa-services'}
-              size="sm"
+              size="lg"
               variant="outline"
-              className="text-base px-6 py-3 rounded-xl font-arabic bg-white/10 border-white/30 text-white hover:bg-white/20 backdrop-blur-sm"
+              className="text-lg px-10 py-5 rounded-2xl font-arabic bg-white/5 border-2 border-white/40 text-white/90 hover:bg-white/15 hover:text-white backdrop-blur-md transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg animate-fade-in"
               style={{ animationDelay: '0.6s' }}
             >
               خدمات الفيزا من أوقات
