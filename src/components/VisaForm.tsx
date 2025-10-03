@@ -86,7 +86,7 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
       submitData.append('How did you know us?', formData.howDidYouKnowUs || "غير محدد");
 
       // Submit to Google Apps Script first
-      const response = await fetch("https://script.google.com/macros/s/AKfycbxop-1HbUQVFCNf4QY6qKjl6WCyJBF9s5pwctzF9nr03AEsUInEciwf-aMh827v2YbT/exec", {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbyNW42cjrnOF30RvgyrdRQC1e7GFAmCLm3-gqP_JsaRZ19diFlFpPtDSaIPRxTvtnol/exec", {
         method: "POST",
         body: submitData
       });
