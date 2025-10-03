@@ -112,8 +112,8 @@ const VisaServices = () => {
               </div>
               
               {/* Floating Elements */}
-              <div className="absolute top-2 -right-6 w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg animate-bounce">
-                <CheckCircle className="w-10 h-10 text-white" />
+              <div className="absolute top-2 -right-6 w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg animate-bounce">
+                <CheckCircle className="w-8 h-8 text-white" />
               </div>
               <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
                 <Shield className="w-8 h-8 text-white" />
