@@ -44,8 +44,7 @@ const Hero = () => {
             <Button 
               onClick={() => window.location.href = '/visa-services'}
               size="lg"
-              variant="outline"
-              className="text-lg px-10 py-5 rounded-2xl font-arabic bg-gradient-to-r from-primary/20 to-accent/20 border-2 border-primary/40 text-white hover:from-primary/30 hover:to-accent/30 hover:border-primary/60 backdrop-blur-md transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg animate-fade-in mx-auto flex items-center justify-center"
+              className="text-lg px-10 py-5 rounded-2xl font-arabic bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-600 hover:via-teal-600 hover:to-cyan-600 text-white shadow-2xl transition-all duration-300 transform hover:scale-105 animate-fade-in mx-auto flex items-center justify-center"
               style={{ animationDelay: '0.6s' }}
             >
               خدمات الفيزا من أوقات
