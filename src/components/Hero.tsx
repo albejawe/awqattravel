@@ -14,8 +14,8 @@ const Hero = () => {
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-elegant" dir={direction}>
       {/* Decorative elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-gradient-gold opacity-10 blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-gradient-gold opacity-10 blur-3xl"></div>
+        <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full bg-gradient-gold opacity-10 blur-3xl"></div>
+        <div className="absolute -bottom-20 -left-20 w-40 h-40 rounded-full bg-gradient-gold opacity-10 blur-3xl"></div>
       </div>
       
       <div className="container mx-auto px-4 text-center relative z-10 pt-20">
