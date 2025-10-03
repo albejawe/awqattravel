@@ -44,7 +44,8 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
     travelers: "",
     phone: "",
     email: "",
-    hasPreviousVisa: ""
+    hasPreviousVisa: "",
+    howDidYouKnowUs: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -82,6 +83,7 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
       submitData.append('Phone Number', formData.phone);
       submitData.append('Email', formData.email || "غير محدد");
       submitData.append('Do you have a previous visa?', formData.hasPreviousVisa || "غير محدد");
+      submitData.append('How did you know us?', formData.howDidYouKnowUs || "غير محدد");
 
       // Submit to Google Apps Script first
       const response = await fetch("https://script.google.com/macros/s/AKfycbxop-1HbUQVFCNf4QY6qKjl6WCyJBF9s5pwctzF9nr03AEsUInEciwf-aMh827v2YbT/exec", {
@@ -110,7 +112,8 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
         travelers: formData.travelers || "غير محدد",
         phone: formData.phone,
         email: formData.email || "غير محدد",
-        hasPreviousVisa: formData.hasPreviousVisa || "غير محدد"
+        hasPreviousVisa: formData.hasPreviousVisa || "غير محدد",
+        howDidYouKnowUs: formData.howDidYouKnowUs || "غير محدد"
       };
 
       // Prepare WhatsApp message
@@ -126,6 +129,7 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
 📱 رقم الهاتف: ${dataForWhatsApp.phone}
 📧 البريد الإلكتروني: ${dataForWhatsApp.email}
 ✅ تأشيرة سابقة: ${dataForWhatsApp.hasPreviousVisa}
+💡 كيف تعرفت علينا: ${dataForWhatsApp.howDidYouKnowUs}
 
 أرجو المتابعة مع طلبي، شكراً.
       `.trim();
@@ -313,6 +317,18 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
                 <SelectItem value="لا">لا</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+
+          {/* How did you know us */}
+          <div className="space-y-2 text-right">
+            <Label className="text-right block mb-2 font-semibold">كيف تعرفت علينا؟</Label>
+            <Input
+              value={formData.howDidYouKnowUs}
+              onChange={(e) => setFormData(prev => ({ ...prev, howDidYouKnowUs: e.target.value }))}
+              placeholder="مثال: من خلال صديق، إعلان، وسائل التواصل الاجتماعي"
+              className="text-right"
+              dir="rtl"
+            />
           </div>
 
           <div className="flex gap-4 pt-4">
