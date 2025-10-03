@@ -44,7 +44,52 @@ const VisaCards = ({ onCountrySelect }: VisaCardsProps) => {
             visaType2: row["نوع الفيزا 2"] || row["Visa Type 2"] || "",
             visaType3: row["نوع الفيزا 3"] || row["Visa Type 3"] || "",
           }));
-          setCountries(parsedData.filter(country => country.title));
+          
+          // Filter and sort countries
+          const filteredCountries = parsedData.filter(country => country.title);
+          
+          // Define priority order for most popular destinations
+          const priorityOrder = [
+            "شنغن",
+            "الولايات المتحدة",
+            "الولايات المتحدة الأمريكية",
+            "أمريكا",
+            "كندا",
+            "بريطانيا",
+            "المملكة المتحدة",
+            "أستراليا",
+            "ألمانيا",
+            "فرنسا",
+            "إيطاليا",
+            "إسبانيا"
+          ];
+          
+          // Sort countries by priority
+          const sortedCountries = filteredCountries.sort((a, b) => {
+            const aIndex = priorityOrder.findIndex(p => 
+              a.title.includes(p) || p.includes(a.title)
+            );
+            const bIndex = priorityOrder.findIndex(p => 
+              b.title.includes(p) || p.includes(b.title)
+            );
+            
+            if (aIndex === -1 && bIndex === -1) return 0;
+            if (aIndex === -1) return 1;
+            if (bIndex === -1) return -1;
+            return aIndex - bIndex;
+          });
+          
+          // Add "غير محدد" as first option
+          const unspecifiedOption: VisaCountry = {
+            imageUrl: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=200&fit=crop",
+            title: "غير محدد",
+            description: "لست متأكداً من الوجهة؟ سنساعدك في اختيار الوجهة المناسبة لك",
+            visaType1: "استشارة مجانية",
+            visaType2: "",
+            visaType3: ""
+          };
+          
+          setCountries([unspecifiedOption, ...sortedCountries]);
           setLoading(false);
         },
         error: (error) => {
