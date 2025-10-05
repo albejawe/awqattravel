@@ -95,6 +95,40 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
 
     setIsSubmitting(true);
 
+    // Prepare WhatsApp data first
+    const dataForWhatsApp = {
+      nationality: formData.nationality,
+      destination: formData.destination,
+      visaType: formData.visaType || "غير محدد",
+      travelDate: formData.travelDate ? format(formData.travelDate, "yyyy-MM-dd") : "غير محدد",
+      duration: formData.duration || "غير محدد",
+      travelers: formData.travelers || "غير محدد",
+      phone: formData.phone,
+      email: formData.email || "غير محدد",
+      hasPreviousVisa: formData.hasPreviousVisa || "غير محدد",
+      howDidYouKnowUs: formData.howDidYouKnowUs || "غير محدد"
+    };
+
+    // Prepare WhatsApp message
+    const whatsappMessage = `
+مرحباً، أود طلب خدمة تأشيرة بالتفاصيل التالية:
+
+📍 الجنسية: ${dataForWhatsApp.nationality}
+🎯 الوجهة: ${dataForWhatsApp.destination}
+📋 نوع التأشيرة: ${dataForWhatsApp.visaType}
+📅 تاريخ السفر المتوقع: ${dataForWhatsApp.travelDate}
+⏱️ المدة: ${dataForWhatsApp.duration}
+👥 عدد المسافرين: ${dataForWhatsApp.travelers}
+📱 رقم الهاتف: ${dataForWhatsApp.phone}
+📧 البريد الإلكتروني: ${dataForWhatsApp.email}
+✅ تأشيرة سابقة: ${dataForWhatsApp.hasPreviousVisa}
+💡 كيف تعرفت علينا: ${dataForWhatsApp.howDidYouKnowUs}
+
+أرجو المتابعة مع طلبي، شكراً.
+    `.trim();
+
+    const whatsappUrl = `https://wa.me/96522289080?text=${encodeURIComponent(whatsappMessage)}`;
+
     try {
       // Show loading message
       toast({
@@ -115,69 +149,49 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
       submitData.append('Do you have a previous visa?', formData.hasPreviousVisa || "غير محدد");
       submitData.append('How did you know us?', formData.howDidYouKnowUs || "غير محدد");
 
-      // Submit to Google Apps Script first
-      const response = await fetch("https://script.google.com/macros/s/AKfycbyNW42cjrnOF30RvgyrdRQC1e7GFAmCLm3-gqP_JsaRZ19diFlFpPtDSaIPRxTvtnol/exec", {
-        method: "POST",
-        body: submitData
-      });
+      // Submit to Google Apps Script with timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
 
-      // Check if submission was successful
-      if (!response.ok) {
-        throw new Error('فشل في حفظ البيانات');
+      try {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbyNW42cjrnOF30RvgyrdRQC1e7GFAmCLm3-gqP_JsaRZ19diFlFpPtDSaIPRxTvtnol/exec", {
+          method: "POST",
+          body: submitData,
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+          console.warn('Google Sheet submission failed, but continuing to WhatsApp');
+        }
+      } catch (fetchError) {
+        console.warn('Google Sheet submission error:', fetchError);
+        // Continue to WhatsApp even if Google Sheet fails
       }
 
       // Show success message
       toast({
-        title: "تم التقديم بنجاح، جاري التوجيه للواتساب",
-        description: "سيتم تحويلك إلى واتساب خلال ثواني"
+        title: "تم التقديم بنجاح",
+        description: "سيتم تحويلك إلى واتساب الآن"
       });
 
-      // Prepare data for WhatsApp message
-      const dataForWhatsApp = {
-        nationality: formData.nationality,
-        destination: formData.destination,
-        visaType: formData.visaType || "غير محدد",
-        travelDate: formData.travelDate ? format(formData.travelDate, "yyyy-MM-dd") : "غير محدد",
-        duration: formData.duration || "غير محدد",
-        travelers: formData.travelers || "غير محدد",
-        phone: formData.phone,
-        email: formData.email || "غير محدد",
-        hasPreviousVisa: formData.hasPreviousVisa || "غير محدد",
-        howDidYouKnowUs: formData.howDidYouKnowUs || "غير محدد"
-      };
-
-      // Prepare WhatsApp message
-      const whatsappMessage = `
-مرحباً، أود طلب خدمة تأشيرة بالتفاصيل التالية:
-
-📍 الجنسية: ${dataForWhatsApp.nationality}
-🎯 الوجهة: ${dataForWhatsApp.destination}
-📋 نوع التأشيرة: ${dataForWhatsApp.visaType}
-📅 تاريخ السفر المتوقع: ${dataForWhatsApp.travelDate}
-⏱️ المدة: ${dataForWhatsApp.duration}
-👥 عدد المسافرين: ${dataForWhatsApp.travelers}
-📱 رقم الهاتف: ${dataForWhatsApp.phone}
-📧 البريد الإلكتروني: ${dataForWhatsApp.email}
-✅ تأشيرة سابقة: ${dataForWhatsApp.hasPreviousVisa}
-💡 كيف تعرفت علينا: ${dataForWhatsApp.howDidYouKnowUs}
-
-أرجو المتابعة مع طلبي، شكراً.
-      `.trim();
-
-      // Only redirect to WhatsApp after successful Google Sheet submission
-      const whatsappUrl = `https://wa.me/96522289080?text=${encodeURIComponent(whatsappMessage)}`;
-      window.open(whatsappUrl, '_blank');
-
-      // Close form
-      onClose();
+      // Redirect to WhatsApp using window.location for better compatibility
+      setTimeout(() => {
+        window.location.href = whatsappUrl;
+      }, 500);
 
     } catch (error) {
       console.error("Error submitting form:", error);
+      
+      // Even if there's an error, still try to open WhatsApp
       toast({
-        title: "حدث خطأ",
-        description: "حدث خطأ أثناء الإرسال، يرجى المحاولة مرة أخرى",
-        variant: "destructive"
+        title: "جاري التحويل للواتساب",
+        description: "سيتم فتح واتساب الآن"
       });
+      
+      setTimeout(() => {
+        window.location.href = whatsappUrl;
+      }, 500);
     } finally {
       setIsSubmitting(false);
     }
