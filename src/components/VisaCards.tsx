@@ -131,7 +131,7 @@ const VisaCards = ({ onCountrySelect }: VisaCardsProps) => {
                 {country.description}
               </p>
               
-              <div className="flex flex-wrap gap-2 mb-4 justify-end">
+              <div className="flex flex-wrap gap-2 mb-4 justify-center">
                 {country.visaType1 && (
                   <Badge className="text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white border-0 hover:from-blue-600 hover:to-blue-700">
                     {country.visaType1}
