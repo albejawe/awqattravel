@@ -79,17 +79,7 @@ const VisaCards = ({ onCountrySelect }: VisaCardsProps) => {
             return aIndex - bIndex;
           });
           
-          // Add "غير محدد" as first option
-          const unspecifiedOption: VisaCountry = {
-            imageUrl: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=200&fit=crop",
-            title: "غير محدد",
-            description: "لست متأكداً من الوجهة؟ سنساعدك في اختيار الوجهة المناسبة لك",
-            visaType1: "استشارة مجانية",
-            visaType2: "",
-            visaType3: ""
-          };
-          
-          setCountries([unspecifiedOption, ...sortedCountries]);
+          setCountries(sortedCountries);
           setLoading(false);
         },
         error: (error) => {
