@@ -11,6 +11,7 @@ interface VisaCountry {
   visaType1: string;
   visaType2: string;
   visaType3: string;
+  visaType4: string;
 }
 
 interface VisaCardsProps {
@@ -43,6 +44,7 @@ const VisaCards = ({ onCountrySelect }: VisaCardsProps) => {
             visaType1: row["نوع الفيزا 1"] || row["Visa Type 1"] || "",
             visaType2: row["نوع الفيزا 2"] || row["Visa Type 2"] || "",
             visaType3: row["نوع الفيزا 3"] || row["Visa Type 3"] || "",
+            visaType4: row["نوع الفيزا 4"] || row["Visa Type 4"] || "",
           }));
           
           // Filter and sort countries
@@ -145,6 +147,11 @@ const VisaCards = ({ onCountrySelect }: VisaCardsProps) => {
                 {country.visaType3 && (
                   <Badge className="text-sm bg-gradient-to-r from-purple-500 to-purple-600 text-white border-0 hover:from-purple-600 hover:to-purple-700">
                     {country.visaType3}
+                  </Badge>
+                )}
+                {country.visaType4 && (
+                  <Badge className="text-sm bg-gradient-to-r from-orange-500 to-orange-600 text-white border-0 hover:from-orange-600 hover:to-orange-700">
+                    {country.visaType4}
                   </Badge>
                 )}
               </div>
