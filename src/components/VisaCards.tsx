@@ -104,7 +104,7 @@ const VisaCards = ({ onCountrySelect }: VisaCardsProps) => {
   }
 
   return (
-    <div className="w-full flex justify-end">
+    <div className="w-full flex justify-center">
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl">
         {countries.map((country, index) => (
           <Card key={index} className="hover:shadow-lg transition-shadow duration-300 cursor-pointer group">
