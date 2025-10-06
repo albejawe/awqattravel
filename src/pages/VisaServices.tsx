@@ -5,7 +5,7 @@ import VisaCards from "@/components/VisaCards";
 import VisaForm from "@/components/VisaForm";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { CheckCircle, Clock, Shield, Headphones, FileText, CreditCard, Users, Star } from "lucide-react";
+import { CheckCircle, Clock, Shield, Headphones, FileText, CreditCard, Users, Star, MessageCircle } from "lucide-react";
 
 const VisaServices = () => {
   const { direction } = useLanguage();
@@ -123,24 +123,6 @@ const VisaServices = () => {
         </div>
       </section>
 
-      {/* Popular Destinations */}
-      <section className="py-20 bg-white/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              وجهات شهيرة
-            </h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              اختر وجهتك المفضلة واحصل على تأشيرتك بأسرع وقت ممكن مع ضمان أعلى معدلات القبول
-            </p>
-          </div>
-          
-          <div className="flex justify-end mb-8">
-            <VisaCards onCountrySelect={handleFormOpen} />
-          </div>
-        </div>
-      </section>
-
       {/* Why Choose Us */}
       <section className="py-20 bg-gradient-to-br from-indigo-50 to-blue-100">
         <div className="container mx-auto px-4">
@@ -177,6 +159,57 @@ const VisaServices = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Free Consultation CTA */}
+      <section className="py-20 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:50px_50px]"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <div className="max-w-3xl mx-auto space-y-8">
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              ترغب باستشارة مجانية؟ كلمنا الآن
+            </h3>
+            <p className="text-xl text-emerald-50 mb-8">
+              تواصل معنا عبر الواتساب واحصل على استشارة مجانية من خبرائنا
+            </p>
+            <Button
+              asChild
+              size="lg"
+              className="bg-white hover:bg-gray-100 text-emerald-600 text-xl px-10 py-6 rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300 group border-0"
+            >
+              <a 
+                href="https://wa.me/966500000000?text=أرغب%20بالحصول%20على%20استشارة%20خاصة%20بالفيزا"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MessageCircle className="w-6 h-6 ml-3 group-hover:rotate-12 transition-transform duration-300" />
+                تحدث معنا
+              </a>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Popular Destinations */}
+      <section className="py-20 bg-white/50 backdrop-blur-sm">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              أشهر الوجهات
+            </h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              اختر وجهتك المفضلة واحصل على تأشيرتك بأسرع وقت ممكن مع ضمان أعلى معدلات القبول
+            </p>
+          </div>
+          
+          <div className="flex justify-end mb-8">
+            <VisaCards onCountrySelect={handleFormOpen} />
           </div>
         </div>
       </section>
