@@ -78,6 +78,7 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
     howDidYouKnowUs: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -259,7 +260,7 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
             {/* Travel Date */}
             <div className="space-y-2 text-right">
               <Label className="text-right block mb-2 font-semibold">تاريخ السفر المتوقع</Label>
-              <Popover>
+              <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
@@ -278,13 +279,7 @@ const VisaForm = ({ isOpen, onClose, selectedCountry = "" }: VisaFormProps) => {
                     selected={formData.travelDate || undefined}
                     onSelect={(date) => {
                       setFormData(prev => ({ ...prev, travelDate: date || null }));
-                      // Close the popover automatically after selection
-                      setTimeout(() => {
-                        const popoverTrigger = document.querySelector('[data-state="open"]');
-                        if (popoverTrigger) {
-                          (popoverTrigger as HTMLElement).click();
-                        }
-                      }, 100);
+                      setIsCalendarOpen(false);
                     }}
                     initialFocus
                     disabled={(date) => date < new Date()}
