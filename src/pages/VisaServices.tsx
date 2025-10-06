@@ -184,7 +184,7 @@ const VisaServices = () => {
               className="bg-white hover:bg-gray-100 text-emerald-600 text-xl px-10 py-6 rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300 group border-0"
             >
               <a 
-                href="https://wa.me/966500000000?text=أرغب%20بالحصول%20على%20استشارة%20خاصة%20بالفيزا"
+                href="https://wa.me/96522289080?text=أرغب%20بالحصول%20على%20استشارة%20خاصة%20بالفيزا"
                 target="_blank"
                 rel="noopener noreferrer"
               >
