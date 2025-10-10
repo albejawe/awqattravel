@@ -16,23 +16,18 @@ A comprehensive travel and tourism mobile application built with React and Capac
 - 📱 **Mobile Ready**: Built with Capacitor for iOS and Android deployment
 - 🎨 **Modern UI**: Beautiful, responsive design with Tailwind CSS and shadcn/ui
 
-### 🔗 Project Links
-
-**Lovable Project**: https://lovable.dev/projects/fd4c9cf4-623b-4224-b7af-7beccf54fc9d
 
 ## How can I edit this code?
 
 There are several ways of editing your application.
 
-**Use Lovable**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/fd4c9cf4-623b-4224-b7af-7beccf54fc9d) and start prompting.
 
-Changes made via Lovable will be committed automatically to this repo.
+Changes made via  will be committed automatically to this repo.
 
 **Use your preferred IDE**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in .
 
 The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
@@ -98,7 +93,6 @@ npm run dev
 ## 🚀 Deployment
 
 ### Web Deployment
-Simply open [Lovable](https://lovable.dev/projects/fd4c9cf4-623b-4224-b7af-7beccf54fc9d) and click on Share -> Publish.
 
 ### Mobile Deployment
 
@@ -122,8 +116,3 @@ npx cap open ios
 
 You can connect a custom domain through Project > Settings > Domains.
 
-Read more: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
-
-## 📄 License
-
-Built with ❤️ using [Lovable](https://lovable.dev)
