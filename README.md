@@ -1,8 +1,24 @@
-# Welcome to your Lovable project
+# أوقات للسياحة والسفر (Awqat Travel & Tourism)
 
-## Project info
+## 📱 About The Project
 
-**URL**: https://lovable.dev/projects/fd4c9cf4-623b-4224-b7af-7beccf54fc9d
+A comprehensive travel and tourism mobile application built with React and Capacitor, offering visa services, travel packages, Umrah bookings, chalet rentals, flight and hotel searches, and an integrated blog.
+
+### ✨ Key Features
+
+- 🛂 **Visa Services**: Apply for visas with automated form submission and WhatsApp notifications
+- ✈️ **Travel Packages**: Browse and book travel offers with detailed pricing
+- 🕋 **Umrah Services**: Specialized Umrah packages and bookings
+- 🏖️ **Chalet Rentals**: Discover and book chalets with image galleries
+- 🔍 **Flight & Hotel Search**: Integrated search functionality for flights and hotels
+- 📝 **Travel Blog**: Content management system with rich text editing
+- 🌐 **Bilingual**: Full support for Arabic and English
+- 📱 **Mobile Ready**: Built with Capacitor for iOS and Android deployment
+- 🎨 **Modern UI**: Beautiful, responsive design with Tailwind CSS and shadcn/ui
+
+### 🔗 Project Links
+
+**Lovable Project**: https://lovable.dev/projects/fd4c9cf4-623b-4224-b7af-7beccf54fc9d
 
 ## How can I edit this code?
 
@@ -50,24 +66,64 @@ npm run dev
 - Click on "New codespace" to launch a new Codespace environment.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
 
-## What technologies are used for this project?
+## 🛠️ Technologies
 
-This project is built with:
+### Frontend
+- **React 18** - Modern UI library
+- **TypeScript** - Type-safe development
+- **Vite** - Fast build tool and dev server
+- **Tailwind CSS** - Utility-first CSS framework
+- **shadcn/ui** - Beautiful component library
+- **React Router** - Client-side routing
+- **React Hook Form** - Form management with validation
+- **React Query** - Data fetching and state management
+- **Lucide React** - Icon library
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Mobile
+- **Capacitor 7** - Native iOS and Android deployment
+- Cross-platform with native capabilities
 
-## How can I deploy this project?
+### Backend & Services
+- **Supabase** - Database, authentication, and storage
+- **Edge Functions** - Serverless backend logic
+- AI-powered blog content generation
+- WhatsApp integration for notifications
 
+### Admin Features
+- Blog content management with rich text editor
+- Category management
+- Bulk import/export functionality
+- Flight and hotel search management
+
+## 🚀 Deployment
+
+### Web Deployment
 Simply open [Lovable](https://lovable.dev/projects/fd4c9cf4-623b-4224-b7af-7beccf54fc9d) and click on Share -> Publish.
 
-## Can I connect a custom domain to my Lovable project?
+### Mobile Deployment
 
-Yes, you can!
+**Android**
+```sh
+npm run build
+npx cap sync android
+npx cap open android
+# Build APK/AAB in Android Studio
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+**iOS** (Requires Mac + Xcode)
+```sh
+npm run build
+npx cap sync ios
+npx cap open ios
+# Build IPA in Xcode
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 🌐 Custom Domain
+
+You can connect a custom domain through Project > Settings > Domains.
+
+Read more: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+## 📄 License
+
+Built with ❤️ using [Lovable](https://lovable.dev)
